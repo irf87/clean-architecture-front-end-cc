@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -11,52 +11,34 @@ import {
   useToast,
   Text,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
-import { useAppDispatch } from '../../../store/hooks';
-import { setUser } from '../store/authSlice';
 import { LoginUseCase } from '../application/LoginUseCase';
 import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/AuthRepositoryImpl';
 import { generateDynamicKey } from '@/utils/keyGenerator';
+import { useLogin } from '@/domains/auth/application/LoginHook';
 
 export const LoginForm = () => {
+  const { login, isLoading, toastMessage } = useLogin();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useAppDispatch();
-  const router = useRouter();
   const toast = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    await login(email, password);
 
-    try {
       const loginUseCase = new LoginUseCase(new AuthRepositoryImpl());
-      const user = await loginUseCase.execute({ 
+      await loginUseCase.execute({ 
         email, 
         password,
         dynamicKey: generateDynamicKey()
       });
-      dispatch(setUser(user));
-      toast({
-        title: 'Login successful',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
-      router.push('/');
-    } catch (error) {
-      toast({
-        title: 'Login failed',
-        description: error instanceof Error ? error.message : 'An error occurred',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    } finally {
-      setIsLoading(false);
-    }
   };
+
+  useEffect(() => {
+    if (toastMessage) {
+      toast(toastMessage);
+    }
+  }, [toastMessage, toast]);
 
   return (
     <Box as="form" onSubmit={handleSubmit} w="100%" maxW="400px">

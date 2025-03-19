@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/authSlice';
 import { User } from '../domain/AuthTypes';
-import { EncryptionService } from '../../../services/encryption';
+import { decryptData } from '@/utils/encryption';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -12,7 +12,6 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useDispatch();
-  const encryptionService = EncryptionService.getInstance();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -20,9 +19,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const user: User = JSON.parse(storedUser);
-          // Decrypt sensitive data
-          if ('token' in user && user.token) {
-            user.token = encryptionService.decryptSensitiveData(user.token);
+          console.log('user from local storage ', user)
+          if ('token' in user && user.token && user.token !== '') {
+            user.token = decryptData(user.token);
           }
           dispatch(setUser(user));
         }
