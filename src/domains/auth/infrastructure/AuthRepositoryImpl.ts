@@ -1,6 +1,7 @@
 import { AuthRepository } from '../domain/AuthRepository';
 import { User } from '../domain/AuthTypes';
 
+import { API_ENDPOINTS, API_HEADERS } from './API';
 export class AuthRepositoryImpl implements AuthRepository {
   private readonly API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
@@ -8,11 +9,9 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   async login(credentials: { email: string; password: string; dynamicKey: string }): Promise<User> {
     try {
-      const response = await fetch(`${this.API_URL}/login`, {
+      const response = await fetch(API_ENDPOINTS.auth.login, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: API_HEADERS,
         body: JSON.stringify({
           email: credentials.email,
           password: credentials.password,
@@ -31,51 +30,14 @@ export class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  async register(userData: { name: string; email: string; password: string }): Promise<User> {
-    try {
-      const response = await fetch(`${this.API_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Registration failed');
-      }
-
-      const user = await response.json();
-      return user;
-    } catch (error) {
-      console.error('Registration error:', error);
-      throw error;
-    }
-  }
-
   async logout(): Promise<void> {
     try {
-      await fetch(`${this.API_URL}/auth/logout`, {
+      await fetch(API_ENDPOINTS.auth.logout, {
         method: 'POST',
       });
     } catch (error) {
       console.error('Logout error:', error);
       throw error;
-    }
-  }
-
-  async getCurrentUser(): Promise<User | null> {
-    try {
-      const response = await fetch(`${this.API_URL}/auth/me`);
-      if (!response.ok) {
-        return null;
-      }
-      const user = await response.json();
-      // Encrypt sensitive data before returning
-      return user;
-    } catch (error) {
-      console.error('Get current user error:', error);
-      return null;
     }
   }
 } 

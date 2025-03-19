@@ -1,5 +1,5 @@
-import { AuthRepository } from '../domain/AuthRepository';
-import { User } from '../domain/AuthTypes';
+import { AuthRepository } from '@/domains/auth/domain/AuthRepository';
+import { User } from '@/domains/auth/domain/AuthTypes';
 
 export class LoginUseCase {
   constructor(private authRepository: AuthRepository) {}

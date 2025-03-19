@@ -6,7 +6,5 @@ export interface AuthRepository {
     password: string;
     dynamicKey: string;
   }): Promise<User>;
-  register(userData: { name: string; email: string; password: string }): Promise<User>;
   logout(): Promise<void>;
-  getCurrentUser(): Promise<User | null>;
 } 

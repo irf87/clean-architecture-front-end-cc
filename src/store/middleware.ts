@@ -1,5 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit';
-import { setUser } from '../domains/auth/store/authSlice';
+import { setUser } from '@/domains/auth/store/authSlice';
 
 import { encryptData } from '@/utils/encryption';
 
