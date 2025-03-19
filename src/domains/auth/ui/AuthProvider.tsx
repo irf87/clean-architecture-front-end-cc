@@ -1,29 +1,39 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../../store/hooks';
+import { useDispatch } from 'react-redux';
 import { setUser } from '../store/authSlice';
-import { User } from '@/domains/auth/domain/AuthTypes';
+import { User } from '../domain/AuthTypes';
+import { EncryptionService } from '../../../services/encryption';
 
 interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const dispatch = useAppDispatch();
+export function AuthProvider({ children }: AuthProviderProps) {
+  const dispatch = useDispatch();
+  const encryptionService = EncryptionService.getInstance();
 
   useEffect(() => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
+    const checkAuth = async () => {
       try {
-        const user: User = JSON.parse(userStr);
-        dispatch(setUser(user));
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const user: User = JSON.parse(storedUser);
+          // Decrypt sensitive data
+          if ('token' in user && user.token) {
+            user.token = encryptionService.decryptSensitiveData(user.token);
+          }
+          dispatch(setUser(user));
+        }
       } catch (error) {
-        console.error('Failed to parse user from localStorage:', error);
+        console.error('Failed to decrypt user data:', error);
         localStorage.removeItem('user');
       }
-    }
+    };
+
+    checkAuth();
   }, [dispatch]);
 
   return <>{children}</>;
-}; 
+} 

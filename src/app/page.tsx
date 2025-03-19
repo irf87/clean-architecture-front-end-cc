@@ -14,7 +14,7 @@ export default function Home() {
         <Heading>Welcome to the App</Heading>
         {isAuthenticated ? (
           <>
-            <Text>Welcome back, {user?.name}!</Text>
+            <Text>Welcome back, {user?.email}!</Text>
             <Counter />
           </>
         ) : (

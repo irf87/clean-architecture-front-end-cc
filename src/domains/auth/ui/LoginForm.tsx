@@ -9,12 +9,14 @@ import {
   Input,
   VStack,
   useToast,
+  Text,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '../../../store/hooks';
 import { setUser } from '../store/authSlice';
 import { LoginUseCase } from '../application/LoginUseCase';
-import { AuthRepositoryImpl } from '../infrastructure/AuthRepositoryImpl';
+import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/AuthRepositoryImpl';
+import { generateDynamicKey } from '@/utils/keyGenerator';
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -30,7 +32,11 @@ export const LoginForm = () => {
 
     try {
       const loginUseCase = new LoginUseCase(new AuthRepositoryImpl());
-      const user = await loginUseCase.execute({ email, password });
+      const user = await loginUseCase.execute({ 
+        email, 
+        password,
+        dynamicKey: generateDynamicKey()
+      });
       dispatch(setUser(user));
       toast({
         title: 'Login successful',
@@ -71,6 +77,9 @@ export const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
+        <Text fontSize="sm" color="gray.500">
+          A dynamic key will be generated when you submit the form
+        </Text>
         <Button
           type="submit"
           colorScheme="blue"

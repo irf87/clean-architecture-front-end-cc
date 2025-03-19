@@ -38,7 +38,6 @@ export class Auth {
     return (
       !!credentials.email &&
       !!credentials.password &&
-      !!credentials.name &&
       credentials.password === credentials.confirmPassword
     );
   }
