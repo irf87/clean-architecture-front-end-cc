@@ -1,6 +1,6 @@
-import { Auth } from '../domain/Auth';
-import { LoginCredentials } from '../domain/AuthTypes';
-import { AuthRepository } from '../infrastructure/AuthRepository';
+import { Auth } from '@/domains/auth/domain/Auth';
+import { LoginCredentials } from '@/domains/auth/domain/AuthTypes';
+import { AuthRepository } from '@/domains/auth/infrastructure/AuthRepository';
 
 export class LoginUseCase {
   constructor(

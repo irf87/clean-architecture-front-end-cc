@@ -17,7 +17,6 @@ import { RegisterUseCase } from '../application/RegisterUseCase';
 import { AuthRepositoryImpl } from '../infrastructure/AuthRepositoryImpl';
 
 export const RegisterForm = () => {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -43,7 +42,7 @@ export const RegisterForm = () => {
 
     try {
       const registerUseCase = new RegisterUseCase(new AuthRepositoryImpl());
-      const user = await registerUseCase.execute({ name, email, password });
+      const user = await registerUseCase.execute({ email, password });
       dispatch(setUser(user));
       toast({
         title: 'Registration successful',
@@ -68,14 +67,6 @@ export const RegisterForm = () => {
   return (
     <Box as="form" onSubmit={handleSubmit} w="100%" maxW="400px">
       <VStack spacing={4}>
-        <FormControl isRequired>
-          <FormLabel>Name</FormLabel>
-          <Input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </FormControl>
         <FormControl isRequired>
           <FormLabel>Email</FormLabel>
           <Input

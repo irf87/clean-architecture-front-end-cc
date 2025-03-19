@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 import { setUser } from '../store/authSlice';
-import { User } from '../domain/AuthTypes';
+import { User } from '@/domains/auth/domain/AuthTypes';
 
 interface AuthProviderProps {
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-import { AuthRepository } from '../domain/AuthRepository';
+import { AuthRepository } from '@/domains/auth/domain/AuthRepository';
 
 export class LogoutUseCase {
   constructor(private authRepository: AuthRepository) {}

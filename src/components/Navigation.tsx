@@ -3,7 +3,7 @@
 import { Box, Button, Flex, Heading, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useAppSelector } from '../store/hooks';
-import { LogoutButton } from '../domains/auth/ui/LogoutButton';
+import { LogoutButton } from '@/domains/auth/ui/LogoutButton';
 
 export const Navigation = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -13,7 +13,7 @@ export const Navigation = () => {
       <Flex align="center">
         <Link href="/" passHref>
           <Heading as="h1" size="md" color="white" cursor="pointer">
-            App
+            App {isAuthenticated}
           </Heading>
         </Link>
         <Spacer />

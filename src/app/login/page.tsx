@@ -1,5 +1,7 @@
+'use client';
+
 import { Container, Heading, VStack } from '@chakra-ui/react';
-import { LoginForm } from '../../../domains/auth/ui/LoginForm';
+import { LoginForm } from '@/domains/auth/ui/LoginForm';
 
 export default function LoginPage() {
   return (

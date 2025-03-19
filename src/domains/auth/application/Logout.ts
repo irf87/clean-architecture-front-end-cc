@@ -1,5 +1,5 @@
-import { Auth } from '../domain/Auth';
-import { AuthRepository } from '../infrastructure/AuthRepository';
+import { Auth } from '@/domains/auth/domain/Auth';
+import { AuthRepository } from '@/domains/auth/infrastructure/AuthRepository';
 
 export class LogoutUseCase {
   constructor(
