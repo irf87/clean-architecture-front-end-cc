@@ -1,4 +1,4 @@
-import { LoginCredentials, RegisterCredentials, User } from '../domain/AuthTypes';
+import { LoginCredentials, RegisterCredentials, User } from '@/domains/auth/domain/AuthTypes';
 
 export interface AuthRepository {
   login(credentials: LoginCredentials): Promise<User>;

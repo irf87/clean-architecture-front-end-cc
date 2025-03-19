@@ -1,11 +1,11 @@
-import { AuthRepository } from '../domain/AuthRepository';
-import { User } from '../domain/AuthTypes';
+import { AuthRepository } from '@/domains/auth/domain/AuthRepository';
+import { User } from '@/domains/auth/domain/AuthTypes';
 
 export class AuthRepositoryImpl implements AuthRepository {
   private readonly API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
   async login(credentials: { email: string; password: string }): Promise<User> {
-    const response = await fetch(`${this.API_URL}/auth/login`, {
+    const response = await fetch(`${this.API_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,8 +21,8 @@ export class AuthRepositoryImpl implements AuthRepository {
     return response.json();
   }
 
-  async register(userData: { name: string; email: string; password: string }): Promise<User> {
-    const response = await fetch(`${this.API_URL}/auth/register`, {
+  async register(userData: { username: string; email: string; password: string }): Promise<User> {
+    const response = await fetch(`${this.API_URL}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export class AuthRepositoryImpl implements AuthRepository {
   }
 
   async logout(): Promise<void> {
-    const response = await fetch(`${this.API_URL}/auth/logout`, {
+    const response = await fetch(`${this.API_URL}/logout`, {
       method: 'POST',
     });
 
