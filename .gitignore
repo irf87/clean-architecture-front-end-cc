@@ -16,6 +16,13 @@
 # next.js
 /.next/
 /out/
+dist/
+.cache/
+
+# Configuración de Next.js
+.next/cache/
+.next/static/
+
 
 # production
 /build
@@ -39,3 +46,37 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Archivos de Storybook generados
+*storybook.log
+.storybook-out/
+
+# Archivos de Jest y pruebas
+coverage/
+*.lcov
+
+# Archivos de configuración de testing-library
+.jest/
+.jest-cache/
+.jest-test-results.json
+
+
+# Archivos de configuración de VSCode e IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Configuración de MacOS y Linux (archivos ocultos)
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración de TypeScript
+tsconfig.tsbuildinfo
+
+# Cache de ESLint y Prettier
+eslintcache
+.prettier.cache
