@@ -17,3 +17,7 @@ export interface LoginCredentials {
   email: string;
   password: string;
 }
+
+export interface LoginInternalCredentials extends LoginCredentials {
+  dynamicKey: string;
+}

@@ -12,14 +12,12 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useDispatch();
-
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const user: User = JSON.parse(storedUser);
-          console.log('user from local storage ', user)
           if ('token' in user && user.token && user.token !== '') {
             user.token = decryptData(user.token);
           }

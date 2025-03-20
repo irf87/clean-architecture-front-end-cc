@@ -1,43 +1,24 @@
 'use client';
 
-import { Button, useToast } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
-import { useAppDispatch } from '../../../store/hooks';
-import { logout } from '../store/authSlice';
-import { LogoutUseCase } from '../application/LogoutUseCase';
-import { AuthRepositoryImpl } from '../infrastructure/AuthRepositoryImpl';
+import { useLogout } from '@/domains/auth/application/useLogout'
 
-export const LogoutButton = () => {
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-  const toast = useToast();
+export function LogoutButton() {
+  const { logout } = useLogout()
 
   const handleLogout = async () => {
     try {
-      const logoutUseCase = new LogoutUseCase(new AuthRepositoryImpl());
-      await logoutUseCase.execute();
-      dispatch(logout());
-      toast({
-        title: 'Logged out successfully',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
-      router.push('/login');
+      await logout()
     } catch (error) {
-      toast({
-        title: 'Logout failed',
-        description: error instanceof Error ? error.message : 'An error occurred',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
+      console.error('Failed to logout:', error)
     }
-  };
+  }
 
   return (
-    <Button onClick={handleLogout} colorScheme="red">
+    <button
+      onClick={handleLogout}
+      className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+    >
       Logout
-    </Button>
-  );
-}; 
+    </button>
+  )
+} 

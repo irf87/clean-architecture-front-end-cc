@@ -1,76 +1,59 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  VStack,
-  useToast,
-  Text,
-} from '@chakra-ui/react';
-import { LoginUseCase } from '../application/LoginUseCase';
-import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/AuthRepositoryImpl';
-import { generateDynamicKey } from '@/utils/keyGenerator';
-import { useLogin } from '@/domains/auth/application/LoginHook';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useLogin } from '@/domains/auth/application/useLogin';
 
-export const LoginForm = () => {
-  const { login, isLoading, toastMessage } = useLogin();
+export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const toast = useToast();
+  const router = useRouter();
+  const { login, isLoading, error } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email, password);
-
-      const loginUseCase = new LoginUseCase(new AuthRepositoryImpl());
-      await loginUseCase.execute({ 
-        email, 
-        password,
-        dynamicKey: generateDynamicKey()
-      });
+    const user = await login(email, password);
+    if(user) {
+      router.push('/dashboard');
+    }
   };
 
-  useEffect(() => {
-    if (toastMessage) {
-      toast(toastMessage);
-    }
-  }, [toastMessage, toast]);
-
   return (
-    <Box as="form" onSubmit={handleSubmit} w="100%" maxW="400px">
-      <VStack spacing={4}>
-        <FormControl isRequired>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormControl>
-        <Text fontSize="sm" color="gray.500">
-          A dynamic key will be generated when you submit the form
-        </Text>
-        <Button
-          type="submit"
-          colorScheme="blue"
-          width="100%"
-          isLoading={isLoading}
-        >
-          Login
-        </Button>
-      </VStack>
-    </Box>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+        />
+      </div>
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+        />
+      </div>
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
+      >
+        {isLoading ? 'Loading...' : 'Login'}
+      </button>
+      <div className="text-red-500">{error}</div>
+    </form>
   );
-}; 
+} 
