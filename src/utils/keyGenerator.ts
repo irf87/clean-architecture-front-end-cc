@@ -23,10 +23,6 @@ export function validateDynamicKey(key: string): boolean {
     
     return now - keyTimestamp <= fiveMinutes;
   } catch (error) {
-    // Log error in development only
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Error generating dynamic key:', error);
-    }
     return false;
   }
 } 
