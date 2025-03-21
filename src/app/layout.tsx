@@ -4,7 +4,6 @@ import './globals.css';
 import StyledComponentsRegistry from '@/lib/registry';
 import { Providers } from '@/store/provider';
 import { AuthProvider } from '@/domains/auth/ui/AuthProvider';
-import { ToastProvider } from '../context/ToastContext';
 import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -26,9 +25,7 @@ export default function RootLayout({
           <ThemeProvider>
             <Providers>
               <AuthProvider>
-                <ToastProvider>
-                  {children}
-                </ToastProvider>
+                {children}
               </AuthProvider>
             </Providers>
           </ThemeProvider>

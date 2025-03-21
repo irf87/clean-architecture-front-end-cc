@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { InputProps } from '@/presentation/design-system/domain/types/InputProps';
 
@@ -17,11 +17,11 @@ const StyledLabel = styled.label`
   color: ${({ theme }) => theme.colors.text.primary};
 `;
 
-const StyledInput = styled.input<{ error?: boolean }>`
+const StyledInput = styled.input<{ $error?: boolean }>`
   padding: 0.5rem 0.75rem;
   border-radius: 0.375rem;
-  border: 1px solid ${({ theme, error }) => 
-    error ? theme.colors.status.error.DEFAULT : theme.colors.border.default};
+  border: 1px solid ${({ theme, $error }) => 
+    $error ? theme.colors.status.error.DEFAULT : theme.colors.border.default};
   background-color: ${({ theme }) => theme.colors.surface.DEFAULT};
   color: ${({ theme }) => theme.colors.text.primary};
   width: 100%;
@@ -29,10 +29,10 @@ const StyledInput = styled.input<{ error?: boolean }>`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme, error }) => 
-      error ? theme.colors.status.error.DEFAULT : theme.colors.border.focus};
-    box-shadow: 0 0 0 2px ${({ theme, error }) => 
-      error ? theme.colors.status.error.light : theme.colors.status.info.light};
+    border-color: ${({ theme, $error }) => 
+      $error ? theme.colors.status.error.DEFAULT : theme.colors.border.focus};
+    box-shadow: 0 0 0 2px ${({ theme, $error }) => 
+      $error ? theme.colors.status.error.light : theme.colors.status.info.light};
   }
 
   &:disabled {
@@ -46,13 +46,13 @@ const StyledInput = styled.input<{ error?: boolean }>`
   }
 `;
 
-const HelperText = styled.span<{ error?: boolean }>`
+const HelperText = styled.span<{ $error?: boolean }>`
   font-size: 0.75rem;
-  color: ${({ theme, error }) => 
-    error ? theme.colors.status.error.DEFAULT : theme.colors.text.secondary};
+  color: ${({ theme, $error }) => 
+    $error ? theme.colors.status.error.DEFAULT : theme.colors.text.secondary};
 `;
 
-export const Input: React.FC<InputProps> = ({
+export const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,
   helperText,
   error = false,
@@ -60,7 +60,7 @@ export const Input: React.FC<InputProps> = ({
   className = '',
   id,
   ...props
-}) => {
+}, ref) => {
   const inputId = id || label.toLowerCase().replace(/\s+/g, '-');
 
   return (
@@ -70,14 +70,18 @@ export const Input: React.FC<InputProps> = ({
       </StyledLabel>
       <StyledInput
         id={inputId}
-        error={error}
+        $error={error}
+        ref={ref}
         {...props}
       />
       {helperText && (
-        <HelperText error={error}>
+        <HelperText $error={error}>
           {helperText}
         </HelperText>
       )}
     </InputContainer>
   );
-}; 
+});
+
+// Add display name for better debugging
+Input.displayName = 'Input'; 
