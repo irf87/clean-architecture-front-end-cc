@@ -24,7 +24,9 @@
       "@/domains/*": ["./src/domains/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/shared/*": ["./src/shared/*"],
-      "@/design-system/*": ["./src/presentation/design-system/*"]
+      "@/design-system/*": ["./src/presentation/design-system/*"],
+      "@/redux-store/*": ["./src/store/*"]
+
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
