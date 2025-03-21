@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LoginUseCase } from '@/domains/auth/application/LoginUseCase';
 import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/client/AuthRepositoryImpl';
 import { setUser } from '@/domains/auth/store/authSlice';
-import { useAppDispatch } from '@/redux-store/hooks';
+import { useAppDispatch } from '@/store/hooks';
 import { generateDynamicKey } from '@/utils/keyGenerator';
 
 const loginUseCase = new LoginUseCase(new AuthRepositoryImpl());
