@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/presentation/*": ["./src/presentation/*"],
+      "@/domains/*": ["./src/domains/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/shared/*": ["./src/shared/*"],
+      "@/design-system/*": ["./src/presentation/design-system/*"],
+      "@/lib/*": ["./src/lib/*"]
+    }
+  },
+  "include": [
+    "../src/**/*.stories.tsx",
+    "../src/**/*.stories.ts",
+    "../src/**/*.stories.mdx",
+    "./preview.tsx",
+    "./main.ts"
+  ]
+} 

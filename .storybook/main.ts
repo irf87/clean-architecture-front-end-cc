@@ -1,4 +1,5 @@
-import type { StorybookConfig } from "@storybook/experimental-nextjs-vite";
+import type { StorybookConfig } from "@storybook/nextjs";
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const config: StorybookConfig = {
   "stories": [
@@ -6,17 +7,38 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   "addons": [
+    "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-onboarding",
-    "@chromatic-com/storybook",
-    "@storybook/experimental-addon-test"
+    "@storybook/addon-interactions",
+    {
+      name: '@storybook/addon-styling',
+      options: {
+        postCss: {
+          implementation: require.resolve('postcss'),
+        },
+      },
+    },
   ],
   "framework": {
-    "name": "@storybook/experimental-nextjs-vite",
+    "name": "@storybook/nextjs",
     "options": {}
+  },
+  "docs": {
+    "autodocs": "tag",
   },
   "staticDirs": [
     "../public"
-  ]
+  ],
+  webpackFinal: async (config) => {
+    if (config.resolve) {
+      config.resolve.plugins = config.resolve.plugins || [];
+      config.resolve.plugins.push(
+        new TsconfigPathsPlugin({
+          extensions: config.resolve.extensions,
+        })
+      );
+    }
+    return config;
+  },
 };
 export default config;
