@@ -1,6 +1,6 @@
+import { User } from '@/domains/auth/domain/AuthTypes';
 import { IAuthLoginInternal } from '@/domains/auth/infrastructure/AuthRepository';
 import { Response } from '@/shared/types/Response';
-import { User } from '@/domains/auth/domain/AuthTypes';
 
 export class LoginUseCase {
   constructor(private authRepository: IAuthLoginInternal) {}

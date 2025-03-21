@@ -1,10 +1,11 @@
 'use client';
 
-import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useLogin } from '@/domains/auth/application/useLogin';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
+
 import { Button } from '@/design-system/ui/atoms/buttons/Button';
 import { Input } from '@/design-system/ui/atoms/inputs/Input';
+import { useLogin } from '@/domains/auth/application/useLogin';
 import { colors } from '@/presentation/design-system/domain/theme';
 
 interface LoginFormInputs {

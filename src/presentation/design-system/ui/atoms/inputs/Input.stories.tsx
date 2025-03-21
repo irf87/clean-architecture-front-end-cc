@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from './Input';
-import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider';
+
 import StyledComponentsRegistry from '@/lib/registry';
+import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider';
+
+import { Input } from './Input';
 
 const meta: Meta<typeof Input> = {
   title: 'Design System/Atoms/Input',

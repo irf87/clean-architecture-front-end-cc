@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+
 import { validateDynamicKey } from '@/utils/keyGenerator'
 
 export function middleware(request: NextRequest) {

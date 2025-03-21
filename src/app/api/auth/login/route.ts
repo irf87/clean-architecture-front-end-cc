@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
-import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/server/AuthRepositoryImpl';
+
 import { LoginUseCase } from '@/domains/auth/application/server/LoginUseCase';
+import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/server/AuthRepositoryImpl';
 
 // Simulate random delay between 1-5 seconds
 const randomDelay = () => new Promise(resolve => setTimeout(resolve, Math.random() * 4000 + 1000))

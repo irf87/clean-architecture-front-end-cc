@@ -1,6 +1,7 @@
 'use client';
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+
 import { colors } from '@/presentation/design-system/domain/theme';
 
 const theme = {

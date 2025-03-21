@@ -2,8 +2,9 @@
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser } from '@/domains/auth/store/authSlice';
+
 import { User } from '@/domains/auth/domain/AuthTypes';
+import { setUser } from '@/domains/auth/store/authSlice';
 import { decryptData } from '@/utils/encryption';
 
 interface AuthProviderProps {

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
-import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider';
+
 import StyledComponentsRegistry from '@/lib/registry';
+import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider';
+
+import { Button } from './Button';
 
 const meta: Meta<typeof Button> = {
   title: 'Design System/Atoms/Button',

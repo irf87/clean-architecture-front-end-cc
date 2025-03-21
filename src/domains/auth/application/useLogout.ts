@@ -1,9 +1,9 @@
-import { useDispatch } from 'react-redux'
-import { setUser } from '@/domains/auth/store/authSlice'
 import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
 
 import { LogoutUseCase } from '@/domains/auth/application/LogoutUseCase';
 import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/client/AuthRepositoryImpl';
+import { setUser } from '@/domains/auth/store/authSlice'
 
 const logoutUseCase = new LogoutUseCase(new AuthRepositoryImpl());
 

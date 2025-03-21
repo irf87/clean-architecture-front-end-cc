@@ -1,25 +1,38 @@
-import React from 'react';
-import { render as rtlRender } from '@testing-library/react';
-import { ChakraProvider } from '@chakra-ui/react';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import theme from '../theme';
+import { configureStore } from '@reduxjs/toolkit'
+import { render as rtlRender } from '@testing-library/react'
+import { PropsWithChildren } from 'react'
+import { Provider } from 'react-redux'
 
-function render(ui: React.ReactElement, { preloadedState = {}, store = configureStore({ reducer: {}, preloadedState }), ...renderOptions } = {}) {
-  function Wrapper({ children }: { children: React.ReactNode }) {
+import { authReducer } from '@/domains/auth/store/authSlice'
+import StyledComponentsRegistry from '@/lib/registry'
+import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider'
+
+export function renderWithProviders(
+  ui: React.ReactElement,
+  {
+    preloadedState = {},
+    store = configureStore({
+      reducer: { auth: authReducer },
+      preloadedState,
+    }),
+    ...renderOptions
+  } = {}
+) {
+  function Wrapper({ children }: PropsWithChildren<object>): JSX.Element {
     return (
       <Provider store={store}>
-        <ChakraProvider theme={theme}>
-          {children}
-        </ChakraProvider>
+        <StyledComponentsRegistry>
+          <ThemeProvider>{children}</ThemeProvider>
+        </StyledComponentsRegistry>
       </Provider>
-    );
+    )
   }
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+
+  return { store, ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }) }
 }
 
 // re-export everything
 export * from '@testing-library/react';
 
 // override render method
-export { render }; 
+export { rtlRender }; 

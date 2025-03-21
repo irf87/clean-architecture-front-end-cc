@@ -1,7 +1,9 @@
 'use client';
 
 import React, { forwardRef } from 'react';
+// eslint-disable-next-line import/no-named-as-default
 import styled, { css } from 'styled-components';
+
 import { InputProps } from '@/presentation/design-system/domain/types/InputProps';
 
 const InputContainer = styled.div<{ fullWidth?: boolean }>`

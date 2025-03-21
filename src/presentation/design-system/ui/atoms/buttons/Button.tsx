@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
+// eslint-disable-next-line import/no-named-as-default
 import styled, { css } from 'styled-components';
+
 import { ButtonProps, ButtonSize, ButtonVariant } from '@/presentation/design-system/domain/types/ButtonProps';
 
 const getVariantStyles = (variant: ButtonVariant = 'primary') => {

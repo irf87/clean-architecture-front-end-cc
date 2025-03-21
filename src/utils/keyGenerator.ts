@@ -19,11 +19,14 @@ export function validateDynamicKey(key: string): boolean {
     // Check if the timestamp is within the last 5 minutes
     const keyTimestamp = parseInt(timestamp);
     const now = Date.now();
-    console.log(now);
     const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
     
     return now - keyTimestamp <= fiveMinutes;
-  } catch {
+  } catch (error) {
+    // Log error in development only
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error generating dynamic key:', error);
+    }
     return false;
   }
 } 
