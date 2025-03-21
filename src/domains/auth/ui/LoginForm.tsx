@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '@/domains/auth/application/useLogin';
+import { Button } from '@/design-system/ui/atoms/buttons/Button';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -46,13 +47,16 @@ export function LoginForm() {
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
         />
       </div>
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
-      >
-        {isLoading ? 'Loading...' : 'Login'}
-      </button>
+      <div className="flex justify-center">
+        <Button
+          type="submit"
+          disabled={isLoading}
+          isLoading={isLoading}
+          variant="primary"
+        >
+          Login
+        </Button>
+      </div>
       <div className="text-red-500">{error}</div>
     </form>
   );
