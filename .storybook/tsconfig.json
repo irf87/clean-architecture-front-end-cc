@@ -1,22 +1,21 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "..",
+    "outDir": "",
     "paths": {
       "@/*": ["./src/*"],
-      "@/presentation/*": ["./src/presentation/*"],
       "@/domains/*": ["./src/domains/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/shared/*": ["./src/shared/*"],
       "@/design-system/*": ["./src/presentation/design-system/*"],
-      "@/lib/*": ["./src/lib/*"]
+      "@/presentation/design-system/*": ["./src/presentation/design-system/*"],
+      "@/redux-store/*": ["./src/store/*"]
     }
   },
   "include": [
-    "../src/**/*.stories.tsx",
     "../src/**/*.stories.ts",
+    "../src/**/*.stories.tsx",
     "../src/**/*.stories.mdx",
-    "./preview.tsx",
-    "./main.ts"
+    "./preview.tsx"
   ]
 } 

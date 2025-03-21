@@ -1,38 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { render as rtlRender } from '@testing-library/react'
-import { PropsWithChildren } from 'react'
-import { Provider } from 'react-redux'
+import React from 'react';
+import { render as rtlRender } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+import { colors, shadows, spacing } from '@/presentation/design-system/domain/theme';
 
-import { authReducer } from '@/domains/auth/store/authSlice'
-import StyledComponentsRegistry from '@/lib/registry'
-import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider'
+const theme = {
+  colors,
+  shadows,
+  spacing
+};
 
-export function renderWithProviders(
-  ui: React.ReactElement,
-  {
-    preloadedState = {},
-    store = configureStore({
-      reducer: { auth: authReducer },
-      preloadedState,
-    }),
-    ...renderOptions
-  } = {}
-) {
-  function Wrapper({ children }: PropsWithChildren<object>): JSX.Element {
-    return (
-      <Provider store={store}>
-        <StyledComponentsRegistry>
-          <ThemeProvider>{children}</ThemeProvider>
-        </StyledComponentsRegistry>
-      </Provider>
-    )
-  }
+function render(ui: React.ReactElement, { ...options } = {}) {
+  const Wrapper = ({ children }: { children: React.ReactNode }) => (
+    <ThemeProvider theme={theme}>
+      {children}
+    </ThemeProvider>
+  );
 
-  return { store, ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }) }
+  return rtlRender(ui, { wrapper: Wrapper, ...options });
 }
 
 // re-export everything
 export * from '@testing-library/react';
-
-// override render method
-export { rtlRender }; 
+export { render }; 

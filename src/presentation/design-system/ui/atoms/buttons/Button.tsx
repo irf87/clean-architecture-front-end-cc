@@ -61,7 +61,13 @@ const getSizeStyles = (size: ButtonSize = 'medium') => {
   return sizes[size];
 };
 
-const StyledButton = styled.button<ButtonProps>`
+interface StyledButtonProps {
+  $variant?: ButtonVariant;
+  $size?: ButtonSize;
+  $fullWidth?: boolean;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
   border-radius: 0.375rem;
   font-weight: 500;
   transition: all 200ms ease-in-out;
@@ -78,9 +84,9 @@ const StyledButton = styled.button<ButtonProps>`
     cursor: not-allowed;
   }
 
-  ${({ variant }) => getVariantStyles(variant)}
-  ${({ size }) => getSizeStyles(size)}
-  ${({ fullWidth }) => fullWidth && css`width: 100%;`}
+  ${({ $variant }) => getVariantStyles($variant)}
+  ${({ $size }) => getSizeStyles($size)}
+  ${({ $fullWidth }) => $fullWidth && css`width: 100%;`}
 `;
 
 const LoadingSpinner = styled.div`
@@ -110,9 +116,9 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <StyledButton
-      variant={variant}
-      size={size}
-      fullWidth={fullWidth}
+      $variant={variant}
+      $size={size}
+      $fullWidth={fullWidth}
       disabled={disabled || isLoading}
       className={className}
       {...props}

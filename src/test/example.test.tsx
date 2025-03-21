@@ -1,8 +1,10 @@
-import { render, screen } from '../test/test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 
-describe('Example Test', () => {
-  it('renders without crashing', () => {
-    render(<div>Test Component</div>);
-    expect(screen.getByText('Test Component')).toBeInTheDocument();
+describe('Example test', () => {
+  it('should work', () => {
+    render(<div data-testid="test">Hello World</div>);
+    expect(screen.getByTestId('test')).toHaveTextContent('Hello World');
   });
 }); 

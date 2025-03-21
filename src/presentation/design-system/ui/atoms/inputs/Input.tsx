@@ -6,11 +6,11 @@ import styled, { css } from 'styled-components';
 
 import { InputProps } from '@/presentation/design-system/domain/types/InputProps';
 
-const InputContainer = styled.div<{ fullWidth?: boolean }>`
+const InputContainer = styled.div<{ $fullWidth?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  ${({ fullWidth }) => fullWidth && css`width: 100%;`}
+  ${({ $fullWidth }) => $fullWidth && css`width: 100%;`}
 `;
 
 const StyledLabel = styled.label`
@@ -66,7 +66,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   const inputId = id || label.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <InputContainer fullWidth={fullWidth} className={className}>
+    <InputContainer $fullWidth={fullWidth} className={className}>
       <StyledLabel htmlFor={inputId}>
         {label}
       </StyledLabel>
