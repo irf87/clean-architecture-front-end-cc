@@ -19,7 +19,7 @@ export function validateDynamicKey(key: string): boolean {
     // Check if the timestamp is within the last 5 minutes
     const keyTimestamp = parseInt(timestamp);
     const now = Date.now();
-    const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
+    const fiveMinutes = 15 * 60 * 1000; // 15 minutes in milliseconds
     
     return now - keyTimestamp <= fiveMinutes;
   } catch (error) {

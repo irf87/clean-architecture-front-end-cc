@@ -1,11 +1,21 @@
-import { LogoutButton } from '@/domains/auth/ui/LogoutButton';
+'use client';
+
+import { NavigationBar } from '@/presentation/design-system/ui/organisms/navigation/NavigationBar';
+import { TaskManager } from '@/domains/task/ui/TaskManager';
+
+import { useLogout } from '@/domains/auth/application/useLogout';
+import { useAuth } from '@/domains/auth/domain/useAuth';
+
 export default function DashBoardPage() {
+  const { logout } = useLogout();
+  const { user } = useAuth();
   return (
     <div>
-      <div>
-        <div>Dashboard</div>
-        <LogoutButton />
-      </div>
+      <NavigationBar 
+        userEmail={user?.email || ''}
+        onLogout={logout}
+      />
+      <TaskManager />
     </div>
   );
 } 

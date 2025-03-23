@@ -2,6 +2,7 @@ export interface User {
   id: string;
   email: string;
   token?: string;
+  dynamicKey?: string;
 }
 
 export type UserType = User;
