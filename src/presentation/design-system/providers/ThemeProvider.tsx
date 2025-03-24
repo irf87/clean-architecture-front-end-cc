@@ -2,7 +2,7 @@
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
-import { colors } from '@/presentation/design-system/domain/theme';
+import { colors, shadows } from '@/presentation/design-system/domain/theme';
 
 const theme = {
   colors: {
@@ -15,9 +15,9 @@ const theme = {
     surface: colors.surface,
     interaction: colors.interaction,
   },
+  shadows,
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return <StyledThemeProvider theme={theme as any}>{children}</StyledThemeProvider>;
+  return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>;
 }
