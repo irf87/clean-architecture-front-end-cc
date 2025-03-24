@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { Container } from '@/presentation/design-system/ui/atoms/layouts/Container';
-import { TaskBoard } from '@/presentation/task/components/TaskBoard';
+import { TaskBoard } from '@/domains/task/ui/TaskBoard';
 import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
 
 export function TaskManager() {

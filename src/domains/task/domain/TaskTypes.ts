@@ -7,4 +7,5 @@ export interface ITask {
   status: TaskStatus;
   createdAt: Date;
   updatedAt: Date;
+  isFavorite: boolean;
 } 

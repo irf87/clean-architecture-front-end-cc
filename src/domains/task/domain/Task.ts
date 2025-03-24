@@ -7,6 +7,7 @@ export class Task implements ITask {
   status: TaskStatus;
   createdAt: Date;
   updatedAt: Date;
+  isFavorite: boolean;
 
   constructor(task: Partial<ITask>) {
     this.id = task.id || crypto.randomUUID();
@@ -15,6 +16,7 @@ export class Task implements ITask {
     this.status = task.status || 'pending';
     this.createdAt = task.createdAt || new Date();
     this.updatedAt = task.updatedAt || new Date();
+    this.isFavorite = task.isFavorite || false;
   }
 
   updateStatus(status: TaskStatus): void {

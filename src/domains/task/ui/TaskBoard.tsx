@@ -1,7 +1,7 @@
 'use client';
 
 import { TaskColumn } from './TaskColumn';
-import { useTaskDragAndDrop } from '../hooks/useTaskDragAndDrop';
+import { useTaskDragAndDrop } from '@/domains/task/application/useTaskDragAndDrop';
 import { TaskStatus } from '@/domains/task/domain/TaskTypes';
 
 export function TaskBoard() {

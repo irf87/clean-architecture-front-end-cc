@@ -17,6 +17,7 @@ export function TaskColumn({ status }: TaskColumnProps) {
           status,
           createdAt: new Date(),
           updatedAt: new Date(),
+          isFavorite: false,
         }}
       />
     </div>
