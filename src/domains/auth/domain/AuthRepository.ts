@@ -6,6 +6,7 @@ import { Response } from '@/shared/types/Response';
 export interface IAuthLoginInternal {
   login(credentials: LoginInternalCredentials): Promise<Response<User>>;
 }
+
 export interface IAuthLogin {
   login(credentials: LoginCredentials): Promise<Response<User>>;
 }

@@ -1,5 +1,5 @@
 'use client';
-import { LoginForm } from '@/domains/auth/ui/LoginForm';
+import { LoginForm } from '@/domains/auth/presentation/LoginForm';
 
 export default function LoginPage() {
   return (

@@ -2,7 +2,7 @@
 
 import { Provider } from 'react-redux';
 
-import { AuthProvider } from '../domains/auth/ui/AuthProvider';
+import { AuthProvider } from '../domains/auth/presentation/AuthProvider';
 import { store } from '../store/store';
 
 import { Navigation } from './Navigation';

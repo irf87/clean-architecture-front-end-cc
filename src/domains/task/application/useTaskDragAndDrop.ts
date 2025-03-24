@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { ITask, TaskStatus } from '@/domains/task/domain/TaskTypes';
+import { TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
 
 interface UseTaskDragAndDropProps {
   onStatusChange: (taskId: string, status: TaskStatus) => Promise<void>;
 }
 
 export const useTaskDragAndDrop = ({ onStatusChange }: UseTaskDragAndDropProps) => {
-  const [draggedTask, setDraggedTask] = useState<ITask | null>(null);
+  const [draggedTask, setDraggedTask] = useState<TaskNode | null>(null);
 
-  const handleDragStart = (task: ITask) => {
+  const handleDragStart = (task: TaskNode) => {
     setDraggedTask(task);
   };
 

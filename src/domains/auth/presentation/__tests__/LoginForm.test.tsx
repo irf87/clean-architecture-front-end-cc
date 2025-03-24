@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { LoginForm } from '@/domains/auth/ui/LoginForm';
+import { LoginForm } from '@/domains/auth/presentation/LoginForm';
 import { render } from '@/test/test-utils';
 
 // Mock the next/navigation module

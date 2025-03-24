@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
 import './globals.css';
-import { AuthProvider } from '@/domains/auth/ui/AuthProvider';
+import { AuthProvider } from '@/domains/auth/presentation/AuthProvider';
 import StyledComponentsRegistry from '@/lib/registry';
 import { ThemeProvider } from '@/presentation/design-system/providers/ThemeProvider';
 import { Providers } from '@/store/provider';

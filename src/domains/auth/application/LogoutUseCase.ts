@@ -1,4 +1,4 @@
-import { IAuthLogout } from '@/domains/auth/infrastructure/AuthRepository';
+import { IAuthLogout } from '@/domains/auth/domain/AuthRepository';
 
 export class LogoutUseCase {
   constructor(private authRepository: IAuthLogout) {}

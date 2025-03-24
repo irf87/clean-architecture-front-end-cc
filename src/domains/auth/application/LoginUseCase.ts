@@ -1,5 +1,5 @@
 import { User } from '@/domains/auth/domain/AuthTypes';
-import { IAuthLoginInternal } from '@/domains/auth/infrastructure/AuthRepository';
+import { IAuthLoginInternal } from '@/domains/auth/domain/AuthRepository';
 import { Response } from '@/shared/types/Response';
 
 export class LoginUseCase {

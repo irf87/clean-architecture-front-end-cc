@@ -2,9 +2,17 @@
 
 import { TaskColumn } from './TaskColumn';
 import { useTaskDragAndDrop } from '@/domains/task/application/useTaskDragAndDrop';
-import { TaskStatus } from '@/domains/task/domain/TaskTypes';
+import { TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
+import { useTask } from '@/domains/task/application/useTask';
+import { useAuth } from '@/domains/auth/domain/useAuth';
 
-export function TaskBoard() {
+interface TaskBoardProps {
+  onEditTask: (task: TaskNode) => void;
+}
+
+export function TaskBoard({ onEditTask }: TaskBoardProps) {
+  const { tasks, getUserTasks, createNewTask } = useTask();
+  const { user } = useAuth();
   const columns: TaskStatus[] = ['pending', 'in_progress', 'done'];
   
   const { handleDragOver, handleDrop } = useTaskDragAndDrop({
@@ -13,6 +21,10 @@ export function TaskBoard() {
       console.log('Status changed:', taskId, status);
     },
   });
+
+  if (!user) return null;
+
+  const userTasks = getUserTasks(user.id);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

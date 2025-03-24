@@ -1,6 +1,6 @@
 import { User } from '@/domains/auth/domain/AuthTypes';
 import { API_ENDPOINTS_SERVER, API_HEADERS } from '@/domains/auth/infrastructure/API';
-import { IAuthLogin } from '@/domains/auth/infrastructure/AuthRepository';
+import { IAuthLogin } from '@/domains/auth/domain/AuthRepository';
 import { Response } from '@/shared/types/Response';
 
 export class AuthRepositoryImpl implements IAuthLogin {
