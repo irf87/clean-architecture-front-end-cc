@@ -13,8 +13,9 @@ export function TaskManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskNode | undefined>();
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
-  const { createNewTask } = useTask();
+  const { createNewTask, tasks } = useTask();
   const { user } = useAuth();
+  console.log('tasks', tasks());
 
   const handleOpenCreateModal = () => {
     setSelectedTask(undefined);
@@ -34,6 +35,7 @@ export function TaskManager() {
   };
 
   const handleSubmit = (data: any) => {
+    console.log('data', data);
     if (!user) return;
 
     if (modalMode === 'create') {
@@ -41,8 +43,7 @@ export function TaskManager() {
         title: data.title,
         description: data.description,
         status: data.status,
-        userId: user.id,
-        parentId: selectedTask?.id || null,
+        isFavorite: data.isFavorite,
       });
     } 
     // else if (selectedTask) {
@@ -66,13 +67,13 @@ export function TaskManager() {
         </Button>
       </div>
       <TaskBoard onEditTask={handleOpenEditModal} />
-      {/* <TaskFormModal 
+      <TaskFormModal 
         open={isModalOpen} 
         onClose={handleCloseModal}
         onSubmit={handleSubmit}
         task={selectedTask}
         mode={modalMode}
-      /> */}
+      />
     </Container>
   );
 }

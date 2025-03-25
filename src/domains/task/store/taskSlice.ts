@@ -3,7 +3,7 @@ import { TaskNode, TaskState, CreateTaskDTO, UpdateTaskDTO, TaskStatus } from '@
 import { generateTaskId } from '../application/utils/taskUtils';
 
 const initialState: TaskState = {
-  tasks: [],
+  tasks: {},
   isLoading: false,
   error: null,
 };
@@ -18,22 +18,24 @@ const taskSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
-    createTask: (state, action: PayloadAction<CreateTaskDTO>) => {
+    createTask: (state, action: PayloadAction<{ task: TaskNode; userEmail: string }>) => {
+      const { task, userEmail } = action.payload;
       const newTask: TaskNode = {
-        ...action.payload,
-        id: generateTaskId(action.payload.userId),
+        ...task,
         isFavorite: false,
         createdAt: new Date(),
         updatedAt: new Date(),
-        children: [],
-        parentId: action.payload.parentId || null,
+        parentId: task.parentId || '',
       };
 
-      if (action.payload.parentId) {
-        // Add to parent's children
+      if (!state.tasks[userEmail]) {
+        state.tasks[userEmail] = [];
+      }
+
+      if (task.parentId) {
         const addToParent = (tasks: TaskNode[]): TaskNode[] => {
           return tasks.map(task => {
-            if (task.id === action.payload.parentId) {
+            if (task.id === task.parentId) {
               return {
                 ...task,
                 children: [...task.children, newTask],
@@ -45,46 +47,54 @@ const taskSlice = createSlice({
             };
           });
         };
-        state.tasks = addToParent(state.tasks);
+        state.tasks[userEmail] = addToParent(state.tasks[userEmail]);
       } else {
-        // Add as root task
-        state.tasks.push(newTask);
+        state.tasks[userEmail].push(newTask);
       }
     },
-    updateTask: (state, action: PayloadAction<UpdateTaskDTO>) => {
+    updateTask: (state, action: PayloadAction<{ task: UpdateTaskDTO; userEmail: string }>) => {
+      const { task, userEmail } = action.payload;
+      if (!state.tasks[userEmail]) return;
+
       const updateTaskInTree = (tasks: TaskNode[]): TaskNode[] => {
-        return tasks.map(task => {
-          if (task.id === action.payload.id) {
+        return tasks.map(t => {
+          if (t.id === task.id) {
             return {
+              ...t,
               ...task,
-              ...action.payload,
               updatedAt: new Date(),
             };
           }
           return {
-            ...task,
-            children: updateTaskInTree(task.children),
+            ...t,
+            children: updateTaskInTree(t.children),
           };
         });
       };
-      state.tasks = updateTaskInTree(state.tasks);
+      state.tasks[userEmail] = updateTaskInTree(state.tasks[userEmail]);
     },
-    deleteTask: (state, action: PayloadAction<string>) => {
+    deleteTask: (state, action: PayloadAction<{ taskId: string; userEmail: string }>) => {
+      const { taskId, userEmail } = action.payload;
+      if (!state.tasks[userEmail]) return;
+
       const deleteTaskFromTree = (tasks: TaskNode[]): TaskNode[] => {
         return tasks.filter(task => {
-          if (task.id === action.payload) {
+          if (task.id === taskId) {
             return false;
           }
           task.children = deleteTaskFromTree(task.children);
           return true;
         });
       };
-      state.tasks = deleteTaskFromTree(state.tasks);
+      state.tasks[userEmail] = deleteTaskFromTree(state.tasks[userEmail]);
     },
-    toggleFavorite: (state, action: PayloadAction<string>) => {
+    toggleFavorite: (state, action: PayloadAction<{ taskId: string; userEmail: string }>) => {
+      const { taskId, userEmail } = action.payload;
+      if (!state.tasks[userEmail]) return;
+
       const toggleFavoriteInTree = (tasks: TaskNode[]): TaskNode[] => {
         return tasks.map(task => {
-          if (task.id === action.payload) {
+          if (task.id === taskId) {
             return {
               ...task,
               isFavorite: !task.isFavorite,
@@ -97,18 +107,22 @@ const taskSlice = createSlice({
           };
         });
       };
-      state.tasks = toggleFavoriteInTree(state.tasks);
+      state.tasks[userEmail] = toggleFavoriteInTree(state.tasks[userEmail]);
     },
-    setTasks: (state, action: PayloadAction<TaskNode[]>) => {
-      state.tasks = action.payload;
+    setTasks: (state, action: PayloadAction<{ tasks: TaskNode[]; userEmail: string }>) => {
+      const { tasks, userEmail } = action.payload;
+      state.tasks[userEmail] = tasks;
     },
-    updateTaskStatus: (state, action: PayloadAction<{ taskId: string; status: TaskStatus }>) => {
+    updateTaskStatus: (state, action: PayloadAction<{ taskId: string; status: TaskStatus; userEmail: string }>) => {
+      const { taskId, status, userEmail } = action.payload;
+      if (!state.tasks[userEmail]) return;
+
       const updateStatusInTree = (tasks: TaskNode[]): TaskNode[] => {
         return tasks.map(task => {
-          if (task.id === action.payload.taskId) {
+          if (task.id === taskId) {
             return {
               ...task,
-              status: action.payload.status,
+              status,
               updatedAt: new Date(),
             };
           }
@@ -118,10 +132,13 @@ const taskSlice = createSlice({
           };
         });
       };
-      state.tasks = updateStatusInTree(state.tasks);
+      state.tasks[userEmail] = updateStatusInTree(state.tasks[userEmail]);
     },
   },
 });
+
+// Selectors
+export const selectUserTasks = (state: { tasks: TaskState }, userEmail: string) => state.tasks.tasks[userEmail] || [];
 
 export const {
   setLoading,

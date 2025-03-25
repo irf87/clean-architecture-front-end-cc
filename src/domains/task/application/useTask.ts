@@ -1,31 +1,33 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { CreateTaskUseCase } from '@/domains/task/application/CreateTaskUseCase';
-import { ReduxTaskRepository } from '@/domains/task/infrastructure/ReduxTaskRepository';
+import { TaskUseCase } from '@/domains/task/application/TaskUseCase';
+import { ReduxTaskRepositoryImpl } from '@/domains/task/infrastructure/ReduxTaskRepositoryImpl';
 import { CreateTaskDTO, TaskNode } from '@/domains/task/domain/TaskTypes';
-import { getTasksByUserId } from '@/domains/task/application/utils/taskUtils';
+import { useAuth } from '@/domains/auth/domain/useAuth';
 
 export const useTask = () => {
+  const { user } = useAuth();
   const dispatch = useDispatch();
-  const { tasks, isLoading, error } = useSelector((state: RootState) => state.tasks);
+  const taskRepository = new ReduxTaskRepositoryImpl(dispatch);
+  const taskManagerUseCase = new TaskUseCase(taskRepository);
+ 
+  const { isLoading, error } = useSelector((state: RootState) => state.tasks);
 
   // Initialize repository and use case
-  const taskRepository = new ReduxTaskRepository(dispatch);
-  const createTaskUseCase = new CreateTaskUseCase(taskRepository);
+  
 
   const createNewTask = async (taskData: CreateTaskDTO) => {
-    return createTaskUseCase.execute(taskData);
+    return taskManagerUseCase.create(taskData, user?.email || '');
   };
 
-  const getUserTasks = (userId: string): TaskNode[] => {
-    return getTasksByUserId(tasks, userId);
+  const getUserTasks = (): TaskNode[] => {
+    return taskManagerUseCase.getAllTasks(user?.email || '');
   };
 
   return {
-    tasks,
+    tasks: getUserTasks,
     isLoading,
     error,
     createNewTask,
-    getUserTasks,
   };
 }; 

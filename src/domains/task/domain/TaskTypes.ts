@@ -8,4 +8,31 @@ export interface TaskNode {
   isFavorite: boolean;
   createdAt: Date;
   updatedAt: Date;
+  parentId: string;
+}
+
+export interface CreateTaskDTO {
+  title: string;
+  description: string;
+  status: TaskStatus; 
+  parentId?: string;
+  isFavorite?: boolean;
+}
+
+export interface UpdateTaskDTO {
+  id: string;
+  title?: string;
+  description?: string;
+  status?: TaskStatus;
+  isFavorite?: boolean;
+}
+
+export interface UserTasks {
+  [email: string]: TaskNode[];
+}
+
+export interface TaskState {
+  tasks: UserTasks;
+  isLoading: boolean;
+  error: string | null;
 } 
