@@ -1,25 +1,20 @@
 import { TaskCard } from '@/presentation/design-system/ui/molecules/cards/TaskCard';
-import { TaskStatus } from '@/domains/task/domain/TaskTypes';
+import { TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
 
 interface TaskColumnProps {
   status: TaskStatus;
+  tasks: TaskNode[];
 }
 
-export function TaskColumn({ status }: TaskColumnProps) {
+export function TaskColumn({ status, tasks }: TaskColumnProps) {
   return (
     <div className="space-y-4">
-      {/* TODO: Replace with actual tasks */}
-      <TaskCard
-        task={{
-          id: '1',
-          title: 'Example Task',
-          description: 'This is an example task',
-          status,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          isFavorite: false,
-        }}
-      />
+      {tasks.map((task) => (
+        <TaskCard
+          key={task.id}
+          task={task}
+        />
+      ))}
     </div>
   );
 } 

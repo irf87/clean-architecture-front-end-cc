@@ -1,4 +1,7 @@
 export type TaskStatus = 'pending' | 'in_progress' | 'done';
+export type GroupedTasks = {
+  [K in TaskStatus]: TaskNode[];
+};
 
 export interface TaskNode {
   id: string;

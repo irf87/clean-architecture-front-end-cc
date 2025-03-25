@@ -1,13 +1,13 @@
 'use client';
 
-import { ITask } from '@/domains/task/domain/TaskTypes';
+import { TaskNode } from '@/domains/task/domain/TaskTypes';
 import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
 import styled from 'styled-components';
 
 interface TaskCardProps {
-  task: ITask;
+  task: TaskNode;
   onDelete?: (taskId: string) => void;
-  onDuplicate?: (task: ITask) => void;
+  onDuplicate?: (task: TaskNode) => void;
   draggable?: boolean;
 }
 

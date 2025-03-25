@@ -1,8 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { ITaskRepository } from '../domain/TaskRepository';
-import { TaskNode, TaskStatus } from '../domain/TaskTypes';
-import { createTask, updateTask, deleteTask, updateTaskStatus, selectUserTasks } from '../store/taskSlice';
-import { generateTaskId } from '../application/utils/taskUtils';
+import { ITaskRepository } from '@/domains/task//domain/TaskRepository';
+import { TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
+import { createTask, updateTask, deleteTask, updateTaskStatus, selectUserTasks } from '@/domains/task/store/taskSlice';
+import { generateTaskId } from '@/domains/task/application/utils/taskUtils';
 import { RootState } from '@/store/store';
 
 export class ReduxTaskRepositoryImpl implements ITaskRepository {

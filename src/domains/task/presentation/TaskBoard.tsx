@@ -2,15 +2,16 @@
 
 import { TaskColumn } from './TaskColumn';
 import { useTaskDragAndDrop } from '@/domains/task/application/useTaskDragAndDrop';
-import { TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
+import { TaskStatus, TaskNode, GroupedTasks } from '@/domains/task/domain/TaskTypes';
 // import { useTask } from '@/domains/task/application/useTask';
 import { useAuth } from '@/domains/auth/domain/useAuth';
 
 interface TaskBoardProps {
   onEditTask: (task: TaskNode) => void;
+  groupedTasks: GroupedTasks;
 }
 
-export function TaskBoard({ onEditTask }: TaskBoardProps) {
+export function TaskBoard({ onEditTask, groupedTasks }: TaskBoardProps) {
   const { user } = useAuth();
   const columns: TaskStatus[] = ['pending', 'in_progress', 'done'];
   
@@ -35,7 +36,7 @@ export function TaskBoard({ onEditTask }: TaskBoardProps) {
           <h2 className="text-xl font-semibold mb-4 capitalize">
             {status.replace('_', ' ')}
           </h2>
-          <TaskColumn status={status} />
+          <TaskColumn tasks={groupedTasks[status]} status={status} />
         </div>
       ))}
     </div>
