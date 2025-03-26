@@ -5,9 +5,10 @@ interface TaskColumnProps {
   tasks: TaskNode[];
   onDragStart: (task: TaskNode) => void;
   onEdit: (task: TaskNode) => void;
+  onDelete: (taskId: string) => void;
 }
 
-export function TaskColumn({ tasks, onEdit, onDragStart }: TaskColumnProps) {
+export function TaskColumn({ tasks, onEdit, onDelete, onDragStart }: TaskColumnProps) {
   return (
     <div className="space-y-4">
       {tasks.map((task) => (
@@ -16,6 +17,7 @@ export function TaskColumn({ tasks, onEdit, onDragStart }: TaskColumnProps) {
           task={task}
           onDragStart={onDragStart}
           onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </div>

@@ -33,6 +33,10 @@ export const useTask = () => {
     return taskManagerUseCase.update(taskId, updates, user?.email || '');
   };
 
+  const deleteTask = async (taskId: string) => {
+    return taskManagerUseCase.delete(taskId, user?.email || '');
+  };
+
   return {
     tasks,
     isLoading,
@@ -40,5 +44,6 @@ export const useTask = () => {
     createNewTask,
     updateTaskStatus,
     updateExistingTask,
+    deleteTask,
   };
 }; 

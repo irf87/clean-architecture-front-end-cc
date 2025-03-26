@@ -19,4 +19,8 @@ export class TaskUseCase {
   async update(taskId: string, updates: Partial<TaskNode>, userEmail: string): Promise<TaskNode> {
     return this.taskRepository.updateTask(taskId, updates, userEmail);
   }
+
+  async delete(taskId: string, userEmail: string): Promise<void> {
+    return this.taskRepository.deleteTask(taskId, userEmail);
+  }
 } 

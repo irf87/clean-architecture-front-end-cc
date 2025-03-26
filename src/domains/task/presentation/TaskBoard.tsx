@@ -8,10 +8,11 @@ import { useAuth } from '@/domains/auth/domain/useAuth';
 
 interface TaskBoardProps {
   onEditTask: (task: TaskNode) => void;
+  onDeleteTask: (taskId: string) => void;
   groupedTasks: GroupedTasks;
 }
 
-export function TaskBoard({ onEditTask, groupedTasks }: TaskBoardProps) {
+export function TaskBoard({ onEditTask, onDeleteTask, groupedTasks }: TaskBoardProps) {
   const { user } = useAuth();
   const { updateTaskStatus } = useTask();
   const columns: TaskStatus[] = ['pending', 'in_progress', 'done'];
@@ -39,6 +40,7 @@ export function TaskBoard({ onEditTask, groupedTasks }: TaskBoardProps) {
           <TaskColumn 
             tasks={groupedTasks[status]}
             onEdit={onEditTask}
+            onDelete={onDeleteTask}
             onDragStart={handleDragStart}
           />
         </div>
