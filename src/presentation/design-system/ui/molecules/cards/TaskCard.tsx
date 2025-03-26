@@ -67,6 +67,8 @@ export function TaskCard({
     }
   };
 
+  const isModified = task.createdAt.getTime() !== task.updatedAt.getTime();
+
   return (
     <Card
       draggable={draggable}
@@ -75,7 +77,7 @@ export function TaskCard({
       <Title>{task.title}</Title>
       <Description>{task.description}</Description>
       <DateInfo>
-        Created: {task.createdAt.toLocaleDateString()}
+        {isModified ? 'Modified' : 'Created'}: {isModified ? task.updatedAt.toLocaleDateString() : task.createdAt.toLocaleDateString()}
       </DateInfo>
       <ButtonContainer>
         <Button
