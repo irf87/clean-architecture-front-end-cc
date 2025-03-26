@@ -27,11 +27,19 @@ const Card = styled.div<{ draggable?: boolean }>`
   }
 `;
 
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-items: anchor-center;
+`;
+
 const Title = styled.h3`
   color: ${({ theme }) => theme.colors.text.primary};
   font-size: 1.125rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  flex: 1;
 `;
 
 const Description = styled.p`
@@ -64,6 +72,7 @@ const FavoriteButton = styled.button<{ $isFavorite: boolean }>`
     $isFavorite ? theme.colors.brand.primary : theme.colors.text.disabled};
   font-size: 1.25rem;
   transition: color 200ms ease-in-out;
+  margin-left: 0.5rem;
 
   &:hover {
     color: ${({ theme }) => theme.colors.brand.primary};
@@ -91,12 +100,8 @@ export function TaskCard({
       draggable={draggable}
       onDragStart={handleDragStart}
     >
-      <Title>{task.title}</Title>
-      <Description>{task.description}</Description>
-      <DateInfo>
-        {isModified ? 'Modified' : 'Created'}: {isModified ? task.updatedAt.toLocaleDateString() : task.createdAt.toLocaleDateString()}
-      </DateInfo>
-      <ButtonContainer>
+      <Header>
+        <Title>{task.title}</Title>
         <FavoriteButton
           $isFavorite={task.isFavorite}
           onClick={() => onToggleFavorite?.(task.id)}
@@ -104,6 +109,12 @@ export function TaskCard({
         >
           {task.isFavorite ? '★' : '☆'}
         </FavoriteButton>
+      </Header>
+      <Description>{task.description}</Description>
+      <DateInfo>
+        {isModified ? 'Modified' : 'Created'}: {isModified ? task.updatedAt.toLocaleDateString() : task.createdAt.toLocaleDateString()}
+      </DateInfo>
+      <ButtonContainer>
         <Button
           variant="secondary"
           size="small"
