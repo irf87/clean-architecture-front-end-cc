@@ -7,7 +7,7 @@ import styled from 'styled-components';
 interface TaskCardProps {
   task: TaskNode;
   onDelete?: (taskId: string) => void;
-  onDuplicate?: (task: TaskNode) => void;
+  onEdit?: (task: TaskNode) => void;
   draggable?: boolean;
   onDragStart?: (task: TaskNode) => void;
 }
@@ -57,7 +57,7 @@ const ButtonContainer = styled.div`
 export function TaskCard({ 
   task, 
   onDelete, 
-  onDuplicate, 
+  onEdit, 
   draggable = true,
   onDragStart 
 }: TaskCardProps) {
@@ -83,9 +83,9 @@ export function TaskCard({
         <Button
           variant="secondary"
           size="small"
-          onClick={() => onDuplicate?.(task)}
+          onClick={() => onEdit?.(task)}
         >
-          Duplicate
+          Edit
         </Button>
         <Button
           variant="tertiary"

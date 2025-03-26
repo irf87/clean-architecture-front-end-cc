@@ -20,19 +20,12 @@ const taskSlice = createSlice({
     },
     createTask: (state, action: PayloadAction<{ task: TaskNode; userEmail: string }>) => {
       const { task, userEmail } = action.payload;
-      const newTask: TaskNode = {
-        ...task,
-        isFavorite: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        parentId: task.parentId || '',
-      };
 
       if (!state.tasks[userEmail]) {
         state.tasks[userEmail] = [];
       }
 
-      state.tasks[userEmail].push(newTask);
+      state.tasks[userEmail].push(task);
     },
     updateTask: (state, action: PayloadAction<{ task: UpdateTaskDTO; userEmail: string }>) => {
       const { task, userEmail } = action.payload;
