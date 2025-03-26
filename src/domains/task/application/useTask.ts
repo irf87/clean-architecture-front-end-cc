@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { TaskUseCase } from '@/domains/task/application/TaskUseCase';
 import { ReduxTaskRepositoryImpl } from '@/domains/task/infrastructure/ReduxTaskRepositoryImpl';
-import { CreateTaskDTO, GroupedTasks, TaskStatus } from '@/domains/task/domain/TaskTypes';
+import { CreateTaskDTO, GroupedTasks, TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
 import { useAuth } from '@/domains/auth/domain/useAuth';
 import { selectUserTasks } from '@/domains/task/store/taskSlice';
 
@@ -29,11 +29,16 @@ export const useTask = () => {
     return taskManagerUseCase.updateTaskStatus(taskId, status, user?.email || '');
   };
 
+  const updateExistingTask = async (taskId: string, updates: Partial<TaskNode>) => {
+    return taskManagerUseCase.update(taskId, updates, user?.email || '');
+  };
+
   return {
     tasks,
     isLoading,
     error,
     createNewTask,
     updateTaskStatus,
+    updateExistingTask,
   };
 }; 

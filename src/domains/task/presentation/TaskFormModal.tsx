@@ -86,6 +86,14 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode }: TaskFormM
 
   const handleSubmit = (data: TaskFormInputs) => {
     onSubmit(data);
+    if (mode === 'create') {
+      formMethods.reset({
+        title: '',
+        description: '',
+        status: 'pending',
+        isFavorite: false,
+      });
+    }
     onClose();
   };
 

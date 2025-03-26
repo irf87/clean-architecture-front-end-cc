@@ -4,9 +4,10 @@ import { TaskNode } from '@/domains/task/domain/TaskTypes';
 interface TaskColumnProps {
   tasks: TaskNode[];
   onDragStart: (task: TaskNode) => void;
+  onEdit: (task: TaskNode) => void;
 }
 
-export function TaskColumn({ tasks, onDragStart }: TaskColumnProps) {
+export function TaskColumn({ tasks, onEdit, onDragStart }: TaskColumnProps) {
   return (
     <div className="space-y-4">
       {tasks.map((task) => (
@@ -14,6 +15,7 @@ export function TaskColumn({ tasks, onDragStart }: TaskColumnProps) {
           key={task.id}
           task={task}
           onDragStart={onDragStart}
+          onEdit={onEdit}
         />
       ))}
     </div>

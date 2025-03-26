@@ -13,7 +13,7 @@ export function TaskManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskNode | undefined>();
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
-  const { createNewTask, tasks } = useTask();
+  const { createNewTask, tasks, updateExistingTask } = useTask();
 
   const handleOpenCreateModal = () => {
     setSelectedTask(undefined);
@@ -22,6 +22,7 @@ export function TaskManager() {
   };
 
   const handleOpenEditModal = (task: TaskNode) => {
+    console.log('modal must be open');
     setSelectedTask(task);
     setModalMode('edit');
     setIsModalOpen(true);
@@ -33,8 +34,6 @@ export function TaskManager() {
   };
 
   const handleSubmit = (data: any) => {
-    console.log('data', data);
-
     if (modalMode === 'create') {
       createNewTask({
         title: data.title,
@@ -42,16 +41,14 @@ export function TaskManager() {
         status: data.status,
         isFavorite: data.isFavorite,
       });
-    } 
-    // else if (selectedTask) {
-    //   updateExistingTask({
-    //     id: selectedTask.id,
-    //     title: data.title,
-    //     description: data.description,
-    //     status: data.status,
-    //     isFavorite: data.isFavorite,
-    //   });
-    // }
+    } else if (selectedTask) {
+      updateExistingTask(selectedTask.id, {
+        title: data.title,
+        description: data.description,
+        status: data.status,
+        isFavorite: data.isFavorite,
+      });
+    }
 
     handleCloseModal();
   };

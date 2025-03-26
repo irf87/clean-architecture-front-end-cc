@@ -1,5 +1,5 @@
 import { ITaskRepository } from '@/domains/task/domain/TaskRepository';
-import { CreateTaskDTO, TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
+import { CreateTaskDTO, TaskNode, TaskStatus, UpdateTaskDTO } from '@/domains/task/domain/TaskTypes';
 
 export class TaskUseCase {
   constructor(private taskRepository: ITaskRepository) {}
@@ -14,5 +14,9 @@ export class TaskUseCase {
 
   async updateTaskStatus(taskId: string, status: TaskStatus, userEmail: string): Promise<TaskNode> {
     return this.taskRepository.updateTaskStatus(taskId, status, userEmail);
+  }
+
+  async update(taskId: string, updates: Partial<TaskNode>, userEmail: string): Promise<TaskNode> {
+    return this.taskRepository.updateTask(taskId, updates, userEmail);
   }
 } 

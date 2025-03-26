@@ -38,6 +38,7 @@ export function TaskBoard({ onEditTask, groupedTasks }: TaskBoardProps) {
           </h2>
           <TaskColumn 
             tasks={groupedTasks[status]}
+            onEdit={onEditTask}
             onDragStart={handleDragStart}
           />
         </div>
