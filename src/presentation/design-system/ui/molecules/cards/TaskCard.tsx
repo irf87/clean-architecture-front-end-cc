@@ -8,6 +8,7 @@ interface TaskCardProps {
   task: TaskNode;
   onDelete?: (taskId: string) => void;
   onEdit?: (task: TaskNode) => void;
+  onToggleFavorite?: (taskId: string) => void;
   draggable?: boolean;
   onDragStart?: (task: TaskNode) => void;
 }
@@ -54,10 +55,26 @@ const ButtonContainer = styled.div`
   padding-top: 0.75rem;
 `;
 
+const FavoriteButton = styled.button<{ $isFavorite: boolean }>`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: ${({ $isFavorite, theme }) => 
+    $isFavorite ? theme.colors.brand.primary : theme.colors.text.disabled};
+  font-size: 1.25rem;
+  transition: color 200ms ease-in-out;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.brand.primary};
+  }
+`;
+
 export function TaskCard({ 
   task, 
   onDelete, 
-  onEdit, 
+  onEdit,
+  onToggleFavorite,
   draggable = true,
   onDragStart 
 }: TaskCardProps) {
@@ -80,6 +97,13 @@ export function TaskCard({
         {isModified ? 'Modified' : 'Created'}: {isModified ? task.updatedAt.toLocaleDateString() : task.createdAt.toLocaleDateString()}
       </DateInfo>
       <ButtonContainer>
+        <FavoriteButton
+          $isFavorite={task.isFavorite}
+          onClick={() => onToggleFavorite?.(task.id)}
+          aria-label={task.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+        >
+          {task.isFavorite ? '★' : '☆'}
+        </FavoriteButton>
         <Button
           variant="secondary"
           size="small"

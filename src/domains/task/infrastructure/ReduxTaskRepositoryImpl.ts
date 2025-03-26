@@ -1,7 +1,7 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { ITaskRepository } from '@/domains/task//domain/TaskRepository';
 import { TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
-import { createTask, updateTask, deleteTask, updateTaskStatus, selectUserTasks } from '@/domains/task/store/taskSlice';
+import { createTask, updateTask, deleteTask, updateTaskStatus, toggleFavorite, selectUserTasks } from '@/domains/task/store/taskSlice';
 import { generateTaskId } from '@/domains/task/application/utils/taskUtils';
 import { RootState } from '@/store/store';
 
@@ -43,6 +43,11 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
 
   async updateTaskStatus(taskId: string, status: TaskStatus, userEmail: string): Promise<TaskNode> {
     this.dispatch(updateTaskStatus({ taskId, status, userEmail }));
+    return {} as TaskNode; // This will be handled by the Redux store selector
+  }
+
+  async toggleFavorite(taskId: string, userEmail: string): Promise<TaskNode> {
+    this.dispatch(toggleFavorite({ taskId, userEmail }));
     return {} as TaskNode; // This will be handled by the Redux store selector
   }
 } 

@@ -23,4 +23,8 @@ export class TaskUseCase {
   async delete(taskId: string, userEmail: string): Promise<void> {
     return this.taskRepository.deleteTask(taskId, userEmail);
   }
+
+  async toggleFavorite(taskId: string, userEmail: string): Promise<TaskNode> {
+    return this.taskRepository.toggleFavorite(taskId, userEmail);
+  }
 } 

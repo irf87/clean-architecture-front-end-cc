@@ -15,7 +15,7 @@ export function TaskManager() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskNode | undefined>();
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
-  const { createNewTask, tasks, updateExistingTask, deleteTask } = useTask();
+  const { createNewTask, tasks, updateExistingTask, deleteTask, toggleFavorite } = useTask();
 
   const handleOpenCreateModal = () => {
     setSelectedTask(undefined);
@@ -76,6 +76,10 @@ export function TaskManager() {
     }
   };
 
+  const handleToggleFavorite = (taskId: string) => {
+    toggleFavorite(taskId);
+  };
+
   return (
     <Container>
       <div className="flex justify-end mb-4" style={{ justifyContent: 'flex-end' }}>
@@ -87,6 +91,7 @@ export function TaskManager() {
         groupedTasks={tasks} 
         onEditTask={handleOpenEditModal}
         onDeleteTask={handleOpenDeleteModal}
+        onToggleFavorite={handleToggleFavorite}
       />
       <TaskFormModal 
         open={isModalOpen} 

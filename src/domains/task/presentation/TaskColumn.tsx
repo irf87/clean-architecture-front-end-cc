@@ -6,9 +6,10 @@ interface TaskColumnProps {
   onDragStart: (task: TaskNode) => void;
   onEdit: (task: TaskNode) => void;
   onDelete: (taskId: string) => void;
+  onToggleFavorite: (taskId: string) => void;
 }
 
-export function TaskColumn({ tasks, onEdit, onDelete, onDragStart }: TaskColumnProps) {
+export function TaskColumn({ tasks, onEdit, onDelete, onToggleFavorite, onDragStart }: TaskColumnProps) {
   return (
     <div className="space-y-4">
       {tasks.map((task) => (
@@ -18,6 +19,7 @@ export function TaskColumn({ tasks, onEdit, onDelete, onDragStart }: TaskColumnP
           onDragStart={onDragStart}
           onEdit={onEdit}
           onDelete={onDelete}
+          onToggleFavorite={onToggleFavorite}
         />
       ))}
     </div>

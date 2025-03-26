@@ -37,6 +37,10 @@ export const useTask = () => {
     return taskManagerUseCase.delete(taskId, user?.email || '');
   };
 
+  const toggleFavorite = async (taskId: string) => {
+    return taskManagerUseCase.toggleFavorite(taskId, user?.email || '');
+  };
+
   return {
     tasks,
     isLoading,
@@ -45,5 +49,6 @@ export const useTask = () => {
     updateTaskStatus,
     updateExistingTask,
     deleteTask,
+    toggleFavorite,
   };
 }; 

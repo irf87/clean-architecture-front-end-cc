@@ -7,4 +7,5 @@ export interface ITaskRepository {
   updateTask(taskId: string, updates: Partial<TaskNode>, userEmail: string): Promise<TaskNode>;
   deleteTask(taskId: string, userEmail: string): void;
   updateTaskStatus(taskId: string, status: TaskStatus, userEmail: string): Promise<TaskNode>;
+  toggleFavorite(taskId: string, userEmail: string): Promise<TaskNode>;
 } 

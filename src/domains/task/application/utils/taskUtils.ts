@@ -12,20 +12,3 @@ export const generateTaskId = (userId: string): string => {
 
   return `task-${timestamp}-${hash}`;
 };
-
-export const findTaskById = (tasks: any[], taskId: string): any | null => {
-  for (const task of tasks) {
-    if (task.id === taskId) {
-      return task;
-    }
-    const found = findTaskById(task.children, taskId);
-    if (found) {
-      return found;
-    }
-  }
-  return null;
-};
-
-export const getTasksByUserId = (tasks: any[], userId: string): any[] => {
-  return tasks.filter(task => task.userId === userId);
-}; 
