@@ -32,82 +32,43 @@ const taskSlice = createSlice({
         state.tasks[userEmail] = [];
       }
 
-      if (task.parentId) {
-        const addToParent = (tasks: TaskNode[]): TaskNode[] => {
-          return tasks.map(task => {
-            if (task.id === task.parentId) {
-              return {
-                ...task,
-                children: [...task.children, newTask],
-              };
-            }
-            return {
-              ...task,
-              children: addToParent(task.children),
-            };
-          });
-        };
-        state.tasks[userEmail] = addToParent(state.tasks[userEmail]);
-      } else {
-        state.tasks[userEmail].push(newTask);
-      }
+      state.tasks[userEmail].push(newTask);
     },
     updateTask: (state, action: PayloadAction<{ task: UpdateTaskDTO; userEmail: string }>) => {
       const { task, userEmail } = action.payload;
       if (!state.tasks[userEmail]) return;
 
-      const updateTaskInTree = (tasks: TaskNode[]): TaskNode[] => {
-        return tasks.map(t => {
-          if (t.id === task.id) {
-            return {
-              ...t,
-              ...task,
-              updatedAt: new Date(),
-            };
-          }
+      state.tasks[userEmail] = state.tasks[userEmail].map(t => {
+        if (t.id === task.id) {
           return {
             ...t,
-            children: updateTaskInTree(t.children),
+            ...task,
+            updatedAt: new Date(),
           };
-        });
-      };
-      state.tasks[userEmail] = updateTaskInTree(state.tasks[userEmail]);
+        }
+        return t;
+      });
     },
     deleteTask: (state, action: PayloadAction<{ taskId: string; userEmail: string }>) => {
       const { taskId, userEmail } = action.payload;
       if (!state.tasks[userEmail]) return;
 
-      const deleteTaskFromTree = (tasks: TaskNode[]): TaskNode[] => {
-        return tasks.filter(task => {
-          if (task.id === taskId) {
-            return false;
-          }
-          task.children = deleteTaskFromTree(task.children);
-          return true;
-        });
-      };
-      state.tasks[userEmail] = deleteTaskFromTree(state.tasks[userEmail]);
+      state.tasks[userEmail] = state.tasks[userEmail].filter(task => task.id !== taskId);
     },
     toggleFavorite: (state, action: PayloadAction<{ taskId: string; userEmail: string }>) => {
       const { taskId, userEmail } = action.payload;
       if (!state.tasks[userEmail]) return;
 
-      const toggleFavoriteInTree = (tasks: TaskNode[]): TaskNode[] => {
-        return tasks.map(task => {
-          if (task.id === taskId) {
-            return {
-              ...task,
-              isFavorite: !task.isFavorite,
-              updatedAt: new Date(),
-            };
-          }
+      state.tasks[userEmail] = state.tasks[userEmail].map(task => {
+        if (task.id === taskId) {
           return {
             ...task,
-            children: toggleFavoriteInTree(task.children),
+            isFavorite: !task.isFavorite,
+            updatedAt: new Date(),
           };
-        });
-      };
-      state.tasks[userEmail] = toggleFavoriteInTree(state.tasks[userEmail]);
+        }
+        return task;
+      });
     },
     setTasks: (state, action: PayloadAction<{ tasks: TaskNode[]; userEmail: string }>) => {
       const { tasks, userEmail } = action.payload;
@@ -117,22 +78,16 @@ const taskSlice = createSlice({
       const { taskId, status, userEmail } = action.payload;
       if (!state.tasks[userEmail]) return;
 
-      const updateStatusInTree = (tasks: TaskNode[]): TaskNode[] => {
-        return tasks.map(task => {
-          if (task.id === taskId) {
-            return {
-              ...task,
-              status,
-              updatedAt: new Date(),
-            };
-          }
+      state.tasks[userEmail] = state.tasks[userEmail].map(task => {
+        if (task.id === taskId) {
           return {
             ...task,
-            children: updateStatusInTree(task.children),
+            status,
+            updatedAt: new Date(),
           };
-        });
-      };
-      state.tasks[userEmail] = updateStatusInTree(state.tasks[userEmail]);
+        }
+        return task;
+      });
     },
   },
 });
