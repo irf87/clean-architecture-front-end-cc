@@ -19,7 +19,6 @@ export const useTaskDragAndDrop = ({ onStatusChange }: UseTaskDragAndDropProps) 
   };
 
   const handleDrop = async (status: TaskStatus) => {
-    console.log('handleDrop', draggedTask, status);
     if (draggedTask && draggedTask.status !== status) {
       await onStatusChange(draggedTask.id, status);
     }

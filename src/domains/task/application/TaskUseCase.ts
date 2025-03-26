@@ -1,5 +1,5 @@
 import { ITaskRepository } from '@/domains/task/domain/TaskRepository';
-import { CreateTaskDTO, TaskNode } from '@/domains/task/domain/TaskTypes';
+import { CreateTaskDTO, TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
 
 export class TaskUseCase {
   constructor(private taskRepository: ITaskRepository) {}
@@ -10,5 +10,9 @@ export class TaskUseCase {
 
   getAllTasks(userEmail: string) {
     return this.taskRepository.getAllTasks(userEmail);
+  }
+
+  async updateTaskStatus(taskId: string, status: TaskStatus, userEmail: string): Promise<TaskNode> {
+    return this.taskRepository.updateTaskStatus(taskId, status, userEmail);
   }
 } 

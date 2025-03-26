@@ -9,6 +9,7 @@ interface TaskCardProps {
   onDelete?: (taskId: string) => void;
   onDuplicate?: (task: TaskNode) => void;
   draggable?: boolean;
+  onDragStart?: (task: TaskNode) => void;
 }
 
 const Card = styled.div<{ draggable?: boolean }>`
@@ -53,9 +54,24 @@ const ButtonContainer = styled.div`
   padding-top: 0.75rem;
 `;
 
-export function TaskCard({ task, onDelete, onDuplicate, draggable = true }: TaskCardProps) {
+export function TaskCard({ 
+  task, 
+  onDelete, 
+  onDuplicate, 
+  draggable = true,
+  onDragStart 
+}: TaskCardProps) {
+  const handleDragStart = (e: React.DragEvent) => {
+    if (draggable && onDragStart) {
+      onDragStart(task);
+    }
+  };
+
   return (
-    <Card draggable={draggable}>
+    <Card
+      draggable={draggable}
+      onDragStart={handleDragStart}
+    >
       <Title>{task.title}</Title>
       <Description>{task.description}</Description>
       <DateInfo>

@@ -3,7 +3,7 @@
 import { TaskColumn } from './TaskColumn';
 import { useTaskDragAndDrop } from '@/domains/task/application/useTaskDragAndDrop';
 import { TaskStatus, TaskNode, GroupedTasks } from '@/domains/task/domain/TaskTypes';
-// import { useTask } from '@/domains/task/application/useTask';
+import { useTask } from '@/domains/task/application/useTask';
 import { useAuth } from '@/domains/auth/domain/useAuth';
 
 interface TaskBoardProps {
@@ -13,12 +13,12 @@ interface TaskBoardProps {
 
 export function TaskBoard({ onEditTask, groupedTasks }: TaskBoardProps) {
   const { user } = useAuth();
+  const { updateTaskStatus } = useTask();
   const columns: TaskStatus[] = ['pending', 'in_progress', 'done'];
   
-  const { handleDragOver, handleDrop } = useTaskDragAndDrop({
+  const { handleDragStart, handleDragOver, handleDrop } = useTaskDragAndDrop({
     onStatusChange: async (taskId, status) => {
-      // TODO: Implement status change logic
-      console.log('Status changed:', taskId, status);
+      await updateTaskStatus(taskId, status);
     },
   });
 
@@ -36,7 +36,10 @@ export function TaskBoard({ onEditTask, groupedTasks }: TaskBoardProps) {
           <h2 className="text-xl font-semibold mb-4 capitalize">
             {status.replace('_', ' ')}
           </h2>
-          <TaskColumn tasks={groupedTasks[status]} status={status} />
+          <TaskColumn 
+            tasks={groupedTasks[status]}
+            onDragStart={handleDragStart}
+          />
         </div>
       ))}
     </div>
