@@ -8,13 +8,12 @@ import { useAuth } from '@/domains/auth/domain/useAuth';
 
 interface TaskBoardProps {
   onEditTask: (task: TaskNode) => void;
-  onDeleteTask: (taskId: string) => void;
+  onDeleteTask: (task: TaskNode) => void;
   onToggleFavorite: (taskId: string) => void;
   groupedTasks: GroupedTasks;
 }
 
 export function TaskBoard({ onEditTask, onDeleteTask, onToggleFavorite, groupedTasks }: TaskBoardProps) {
-  const { user } = useAuth();
   const { updateTaskStatus } = useTask();
   const columns: TaskStatus[] = ['pending', 'in_progress', 'done'];
   
@@ -23,8 +22,6 @@ export function TaskBoard({ onEditTask, onDeleteTask, onToggleFavorite, groupedT
       await updateTaskStatus(taskId, status);
     },
   });
-
-  if (!user) return null;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

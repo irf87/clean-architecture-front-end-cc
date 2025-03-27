@@ -5,7 +5,7 @@ interface TaskColumnProps {
   tasks: TaskNode[];
   onDragStart: (task: TaskNode) => void;
   onEdit: (task: TaskNode) => void;
-  onDelete: (taskId: string) => void;
+  onDelete: (taskId: TaskNode) => void;
   onToggleFavorite: (taskId: string) => void;
 }
 

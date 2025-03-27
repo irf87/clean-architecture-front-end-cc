@@ -50,9 +50,9 @@ const ButtonGroup = styled.div`
 `;
 
 const statusLabels: Record<TaskStatus, string> = {
-  pending: 'Pendiente',
-  in_progress: 'En progreso',
-  done: 'Hecho',
+  pending: 'Pending',
+  in_progress: 'In progress',
+  done: 'Done',
 };
 
 export function TaskFormModal({ open, onClose, onSubmit, task, mode }: TaskFormModalProps) {

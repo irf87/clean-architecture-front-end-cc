@@ -6,7 +6,7 @@ import Card from '@/presentation/design-system/ui/atoms/cards/Card';
 
 interface TaskCardProps {
   task: TaskNode;
-  onDelete?: (taskId: string) => void;
+  onDelete?: (task: TaskNode) => void;
   onEdit?: (task: TaskNode) => void;
   onToggleFavorite?: (taskId: string) => void;
   draggable?: boolean;
@@ -58,7 +58,7 @@ export function TaskCard({
         <Button
           variant="tertiary"
           size="small"
-          onClick={() => onDelete?.(task.id)}
+          onClick={() => onDelete?.(task)}
         >
           Remove
         </Button>

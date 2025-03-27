@@ -8,7 +8,6 @@ import { TaskFormModal } from './TaskFormModal';
 import { DeleteTaskConfirmationModal } from './DeleteTaskConfirmationModal';
 import { TaskNode } from '@/domains/task/domain/TaskTypes';
 import { useTask } from '@/domains/task/application/useTask';
-import { useAuth } from '@/domains/auth/domain/useAuth';
 
 export function TaskManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,14 +28,9 @@ export function TaskManager() {
     setIsModalOpen(true);
   };
 
-  const handleOpenDeleteModal = (taskId: string) => {
-    const task = Object.values(tasks)
-      .flat()
-      .find(t => t.id === taskId);
-    if (task) {
-      setSelectedTask(task);
-      setIsDeleteModalOpen(true);
-    }
+  const handleOpenDeleteModal = (task: TaskNode) => {
+    setSelectedTask(task);
+    setIsDeleteModalOpen(true);
   };
 
   const handleCloseModal = () => {

@@ -38,10 +38,10 @@ export function LoginForm() {
       control={formMethods.control}
       name="email"
       rules={{
-        required: 'El email es requerido',
+        required: 'Email is required',
         pattern: {
           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-          message: 'Correo electrónico inválido'
+          message: 'Invalid email'
         }
       }}
       render={({ field }) => (
@@ -56,7 +56,7 @@ export function LoginForm() {
         control={formMethods.control}
         name="password"
         rules={{
-          required: 'La contraseña es requerida',
+          required: 'Password is required',
         }}
         render={({ field }) => (
           <Input
