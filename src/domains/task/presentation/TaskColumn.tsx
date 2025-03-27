@@ -1,4 +1,4 @@
-import { TaskCard } from '@/presentation/design-system/ui/molecules/cards/TaskCard';
+import { TaskCard } from '@/domains/task/presentation/TaskCard';
 import { TaskNode } from '@/domains/task/domain/TaskTypes';
 
 interface TaskColumnProps {
