@@ -13,16 +13,10 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
     return selectUserTasks(state, userEmail);
   }
 
-  getTasksByStatus(status: TaskStatus): TaskNode[] {
-    // This will be handled by the Redux store selector
-    return [];
-  }
-
   async createTask(task: Partial<TaskNode>, userEmail: string): Promise<TaskNode> {
     const newTask: TaskNode = {
       ...task,
       id: generateTaskId(userEmail),
-      isFavorite: false,
       createdAt: new Date(),
       updatedAt: new Date(),
       parentId: task.parentId || '',
@@ -34,7 +28,7 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
 
   async updateTask(taskId: string, updates: Partial<TaskNode>, userEmail: string): Promise<TaskNode> {
     this.dispatch(updateTask({ task: { id: taskId, ...updates }, userEmail }));
-    return {} as TaskNode; // This will be handled by the Redux store selector
+    return {} as TaskNode; 
   }
 
   deleteTask(taskId: string, userEmail: string): void {
@@ -43,11 +37,11 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
 
   async updateTaskStatus(taskId: string, status: TaskStatus, userEmail: string): Promise<TaskNode> {
     this.dispatch(updateTaskStatus({ taskId, status, userEmail }));
-    return {} as TaskNode; // This will be handled by the Redux store selector
+    return {} as TaskNode;
   }
 
   async toggleFavorite(taskId: string, userEmail: string): Promise<TaskNode> {
     this.dispatch(toggleFavorite({ taskId, userEmail }));
-    return {} as TaskNode; // This will be handled by the Redux store selector
+    return {} as TaskNode;
   }
 } 

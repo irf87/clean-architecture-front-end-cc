@@ -85,6 +85,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode }: TaskFormM
   }, [task, mode, formMethods]);
 
   const handleSubmit = (data: TaskFormInputs) => {
+    console.log('data', data);
     onSubmit(data);
     if (mode === 'create') {
       formMethods.reset({
