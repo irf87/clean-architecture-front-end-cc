@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/store/store';
 import { TaskNode, TaskState, UpdateTaskDTO, TaskStatus } from '@/domains/task/domain/TaskTypes';
 
@@ -84,9 +84,12 @@ const taskSlice = createSlice({
   },
 });
 
-// Selectors
-export const selectUserTasks = (state: RootState, userEmail: string) => 
-  state?.tasks?.tasks[userEmail] || [];
+const selectTasksState = (state: RootState) => state.tasks.tasks;
+
+export const selectUserTasks = createSelector(
+  [selectTasksState, (state: RootState, userEmail: string) => userEmail],
+  (tasks, userEmail) => tasks[userEmail] || []
+);
 
 export const {
   setLoading,

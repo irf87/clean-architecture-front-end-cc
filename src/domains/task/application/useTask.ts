@@ -5,6 +5,24 @@ import { ReduxTaskRepositoryImpl } from '@/domains/task/infrastructure/ReduxTask
 import { CreateTaskDTO, GroupedTasks, TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
 import { useAuth } from '@/domains/auth/domain/useAuth';
 import { selectUserTasks } from '@/domains/task/store/taskSlice';
+import { createSelector } from '@reduxjs/toolkit';
+
+const selectGroupedTasks = createSelector(
+  [selectUserTasks],
+  (tasks) => ({
+    pending: tasks.filter(task => task.status === 'pending'),
+    in_progress: tasks.filter(task => task.status === 'in_progress'),
+    done: tasks.filter(task => task.status === 'done')
+  })
+);
+
+const selectTaskState = createSelector(
+  [(state: RootState) => state.tasks],
+  (tasksState) => ({
+    isLoading: tasksState.isLoading,
+    error: tasksState.error
+  })
+);
 
 export const useTask = () => {
   const { user } = useAuth();
@@ -12,14 +30,8 @@ export const useTask = () => {
   const taskRepository = new ReduxTaskRepositoryImpl(dispatch);
   const taskManagerUseCase = new TaskUseCase(taskRepository);
   
-  const reduxTasks = useSelector((state: RootState) => selectUserTasks(state, user?.email || ''));
-  const { isLoading, error } = useSelector((state: RootState) => state.tasks);
-
-  const tasks: GroupedTasks = {
-    pending: reduxTasks.filter(task => task.status === 'pending'),
-    in_progress: reduxTasks.filter(task => task.status === 'in_progress'),
-    done: reduxTasks.filter(task => task.status === 'done')
-  };
+  const tasks = useSelector((state: RootState) => selectGroupedTasks(state, user?.email || ''));
+  const { isLoading, error } = useSelector(selectTaskState);
 
   const createNewTask = async (taskData: CreateTaskDTO) => {
     return taskManagerUseCase.create(taskData, user?.email || '');
