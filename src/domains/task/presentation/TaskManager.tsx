@@ -14,7 +14,7 @@ export function TaskManager() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskNode | undefined>();
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
-  const { createNewTask, tasks, updateExistingTask, deleteTask, toggleFavorite } = useTask();
+  const { cleanError, createNewTask, tasks, updateExistingTask, deleteTask, toggleFavorite, error } = useTask();
 
   const handleOpenCreateModal = () => {
     setSelectedTask(undefined);
@@ -36,6 +36,7 @@ export function TaskManager() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedTask(undefined);
+    cleanError();
   };
 
   const handleCloseDeleteModal = () => {
@@ -43,24 +44,24 @@ export function TaskManager() {
     setSelectedTask(undefined);
   };
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: any) => {
+    let shouldCloseModal = true;
     if (modalMode === 'create') {
-      createNewTask({
+      shouldCloseModal = Boolean(await createNewTask({
         title: data.title,
         description: data.description,
         status: data.status,
         isFavorite: data.isFavorite,
-      });
+      }));
     } else if (selectedTask) {
-      updateExistingTask(selectedTask.id, {
+      shouldCloseModal = Boolean(await updateExistingTask(selectedTask.id, {
         title: data.title,
         description: data.description,
         status: data.status,
         isFavorite: data.isFavorite,
-      });
+      }));
     }
-
-    handleCloseModal();
+    return shouldCloseModal;
   };
 
   const handleConfirmDelete = () => {
@@ -87,7 +88,8 @@ export function TaskManager() {
         onDeleteTask={handleOpenDeleteModal}
         onToggleFavorite={handleToggleFavorite}
       />
-      <TaskFormModal 
+      <TaskFormModal
+        error={error}
         open={isModalOpen} 
         onClose={handleCloseModal}
         onSubmit={handleSubmit}

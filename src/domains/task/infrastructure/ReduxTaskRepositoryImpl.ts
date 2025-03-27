@@ -1,19 +1,22 @@
-import { Dispatch } from '@reduxjs/toolkit';
+import { Dispatch, Store } from '@reduxjs/toolkit';
 import { ITaskRepository } from '@/domains/task//domain/TaskRepository';
 import { TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
-import { createTask, updateTask, deleteTask, updateTaskStatus, toggleFavorite, selectUserTasks } from '@/domains/task/store/taskSlice';
+import { createTask, updateTask, deleteTask, updateTaskStatus, toggleFavorite, selectUserTasks, setError } from '@/domains/task/store/taskSlice';
 import { generateTaskId } from '@/domains/task/application/utils/taskUtils';
 import { RootState } from '@/store/store';
 
 export class ReduxTaskRepositoryImpl implements ITaskRepository {
-  constructor(private dispatch: Dispatch) {}
+  constructor(
+    private dispatch: Dispatch,
+    private store: Store<RootState>
+  ) {}
 
   getAllTasks(userEmail: string): TaskNode[] {
-    const state = (window as any).__NEXT_DATA__?.props?.pageProps?.store?.getState() as RootState;
-    return selectUserTasks(state, userEmail);
+    return selectUserTasks(this.store.getState(), userEmail);
   }
 
   async createTask(task: Partial<TaskNode>, userEmail: string): Promise<TaskNode> {
+
     const newTask: TaskNode = {
       ...task,
       id: generateTaskId(userEmail),
@@ -27,6 +30,7 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
   }
 
   async updateTask(taskId: string, updates: Partial<TaskNode>, userEmail: string): Promise<TaskNode> {
+
     this.dispatch(updateTask({ task: { id: taskId, updatedAt: new Date().toISOString(), ...updates }, userEmail }));
     return {} as TaskNode; 
   }
@@ -43,5 +47,9 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
   async toggleFavorite(taskId: string, userEmail: string): Promise<TaskNode> {
     this.dispatch(toggleFavorite({ taskId, userEmail }));
     return {} as TaskNode;
+  }
+
+  setError(error: string): void {
+    this.dispatch(setError(error));
   }
 } 

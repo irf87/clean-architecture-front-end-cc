@@ -1,14 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { Modal } from '@/presentation/design-system/ui/atoms/modal/Modal';
 import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
 import { Input } from '@/presentation/design-system/ui/atoms/inputs/Input';
 import { Select } from '@/presentation/design-system/ui/atoms/inputs/Select';
 import { TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
-
+import { Form, CheckboxGroup, Checkbox, ButtonGroup } from '@/domains/task/presentation/FormModalStyled';
 interface TaskFormInputs {
   title: string;
   description: string;
@@ -19,35 +18,11 @@ interface TaskFormInputs {
 interface TaskFormModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: TaskFormInputs) => void;
+  onSubmit: (data: TaskFormInputs) => Promise<boolean>;
   task?: TaskNode;
   mode: 'create' | 'edit';
+  error?: string;
 }
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const CheckboxGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const Checkbox = styled.input`
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1rem;
-`;
 
 const statusLabels: Record<TaskStatus, string> = {
   pending: 'Pending',
@@ -55,7 +30,8 @@ const statusLabels: Record<TaskStatus, string> = {
   done: 'Done',
 };
 
-export function TaskFormModal({ open, onClose, onSubmit, task, mode }: TaskFormModalProps) {
+export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: TaskFormModalProps) {
+  const [duplicateTitleError, setDuplicateTitleError] = useState<string | null>(null);
   const formMethods = useForm<TaskFormInputs>({
     mode: 'onChange',
     defaultValues: {
@@ -65,6 +41,19 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode }: TaskFormM
       isFavorite: false,
     }
   });
+
+  const handleSubmit = async (data: TaskFormInputs) => {
+    const shouldCloseModal = await onSubmit(data);
+    if (mode === 'create' && shouldCloseModal) {
+      formMethods.reset({
+        title: '',
+        description: '',
+        status: 'pending',
+        isFavorite: false,
+      });
+    }
+    if(shouldCloseModal) onClose();
+  };
 
   useEffect(() => {
     if (task && mode === 'edit') {
@@ -82,20 +71,15 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode }: TaskFormM
         isFavorite: false,
       });
     }
+    setDuplicateTitleError(null);
   }, [task, mode, formMethods]);
 
-  const handleSubmit = (data: TaskFormInputs) => {
-    onSubmit(data);
-    if (mode === 'create') {
-      formMethods.reset({
-        title: '',
-        description: '',
-        status: 'pending',
-        isFavorite: false,
-      });
+  useEffect(() => {
+    if (error === 'A task with this title already exists') {
+      console.log('error', error);
+      setDuplicateTitleError(error);
     }
-    onClose();
-  };
+  }, [error]);
 
   return (
     <Modal 
@@ -118,8 +102,8 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode }: TaskFormM
             render={({ field }) => (
               <Input
                 label="Title"
-                error={!!formMethods.formState.errors.title}
-                helperText={formMethods.formState.errors.title?.message}
+                error={!!formMethods.formState.errors.title || !!duplicateTitleError}
+                helperText={formMethods.formState.errors.title?.message || duplicateTitleError || undefined}
                 {...field}
                 fullWidth
               />

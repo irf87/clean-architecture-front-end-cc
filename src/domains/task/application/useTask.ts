@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { RootState, store } from '@/store/store';
 import { TaskUseCase } from '@/domains/task/application/TaskUseCase';
 import { ReduxTaskRepositoryImpl } from '@/domains/task/infrastructure/ReduxTaskRepositoryImpl';
-import { CreateTaskDTO, GroupedTasks, TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
+import { CreateTaskDTO, TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
 import { useAuth } from '@/domains/auth/domain/useAuth';
 import { selectUserTasks } from '@/domains/task/store/taskSlice';
 import { createSelector } from '@reduxjs/toolkit';
@@ -27,13 +27,17 @@ const selectTaskState = createSelector(
 export const useTask = () => {
   const { user } = useAuth();
   const dispatch = useDispatch();
-  const taskRepository = new ReduxTaskRepositoryImpl(dispatch);
+  const taskRepository = new ReduxTaskRepositoryImpl(dispatch, store);
   const taskManagerUseCase = new TaskUseCase(taskRepository);
   
   const tasks = useSelector((state: RootState) => selectGroupedTasks(state, user?.email || ''));
   const { isLoading, error } = useSelector(selectTaskState);
 
   const createNewTask = async (taskData: CreateTaskDTO) => {
+    if (!validateDuplicateTitle(taskData.title)) {
+      taskRepository.setError('A task with this title already exists');
+      return;
+    }
     return taskManagerUseCase.create(taskData, user?.email || '');
   };
 
@@ -42,6 +46,12 @@ export const useTask = () => {
   };
 
   const updateExistingTask = async (taskId: string, updates: Partial<TaskNode>) => {
+    if(updates?.title) {
+      if (!validateDuplicateTitle(updates?.title)) {
+        taskRepository.setError('A task with this title already exists');
+        return;
+      }
+    }
     return taskManagerUseCase.update(taskId, updates, user?.email || '');
   };
 
@@ -53,14 +63,24 @@ export const useTask = () => {
     return taskManagerUseCase.toggleFavorite(taskId, user?.email || '');
   };
 
+  const validateDuplicateTitle = (title: string) => {
+    const tasks = taskManagerUseCase.getAllTasks(user?.email || '');
+    return !tasks.some(task => task.title.toLowerCase() === title.toLowerCase());
+  };
+
+  const cleanError = () => {
+    taskRepository.setError('');
+  };
+
   return {
     tasks,
     isLoading,
-    error,
+    error: error || '',
     createNewTask,
     updateTaskStatus,
     updateExistingTask,
     deleteTask,
     toggleFavorite,
+    cleanError,
   };
 }; 
