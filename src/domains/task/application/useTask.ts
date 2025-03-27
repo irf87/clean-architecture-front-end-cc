@@ -6,6 +6,7 @@ import { CreateTaskDTO, TaskStatus, TaskNode } from '@/domains/task/domain/TaskT
 import { useAuth } from '@/domains/auth/domain/useAuth';
 import { selectUserTasks } from '@/domains/task/store/taskSlice';
 import { createSelector } from '@reduxjs/toolkit';
+import { TASK_ERRORS } from '@/domains/task/domain/TaskConstants';
 
 const selectGroupedTasks = createSelector(
   [selectUserTasks],
@@ -35,7 +36,7 @@ export const useTask = () => {
 
   const createNewTask = async (taskData: CreateTaskDTO) => {
     if (!validateDuplicateTitle(taskData.title)) {
-      taskRepository.setError('A task with this title already exists');
+      taskRepository.setError(TASK_ERRORS.DUPLICATE_TITLE);
       return;
     }
     return taskManagerUseCase.create(taskData, user?.email || '');
@@ -48,7 +49,7 @@ export const useTask = () => {
   const updateExistingTask = async (taskId: string, updates: Partial<TaskNode>) => {
     if(updates?.title) {
       if (!validateDuplicateTitle(updates?.title)) {
-        taskRepository.setError('A task with this title already exists');
+        taskRepository.setError(TASK_ERRORS.DUPLICATE_TITLE);
         return;
       }
     }

@@ -8,6 +8,8 @@ import { Input } from '@/presentation/design-system/ui/atoms/inputs/Input';
 import { Select } from '@/presentation/design-system/ui/atoms/inputs/Select';
 import { TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
 import { Form, CheckboxGroup, Checkbox, ButtonGroup } from '@/domains/task/presentation/FormModalStyled';
+import { TASK_ERRORS } from '@/domains/task/domain/TaskConstants';
+
 interface TaskFormInputs {
   title: string;
   description: string;
@@ -75,8 +77,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
   }, [task, mode, formMethods]);
 
   useEffect(() => {
-    if (error === 'A task with this title already exists') {
-      console.log('error', error);
+    if (error === TASK_ERRORS.DUPLICATE_TITLE) {
       setDuplicateTitleError(error);
     }
   }, [error]);
@@ -93,7 +94,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
             control={formMethods.control}
             name="title"
             rules={{
-              required: 'Title is required',
+              required: TASK_ERRORS.EMPTY_TITLE,
               minLength: {
                 value: 3,
                 message: 'Title must be at least 3 characters',
@@ -114,7 +115,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
             control={formMethods.control}
             name="description"
             rules={{
-              required: 'Description is required',
+              required: TASK_ERRORS.EMPTY_DESCRIPTION,
               minLength: {
                 value: 10,
                 message: 'Description must be at least 10 characters',
@@ -135,7 +136,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
             control={formMethods.control}
             name="status"
             rules={{
-              required: 'Status is required',
+              required: TASK_ERRORS.EMPTY_STATUS,
             }}
             render={({ field }) => (
               <Select
