@@ -36,7 +36,6 @@ const taskSlice = createSlice({
           return {
             ...t,
             ...task,
-            updatedAt: new Date(),
           };
         }
         return t;
@@ -57,7 +56,7 @@ const taskSlice = createSlice({
           return {
             ...task,
             isFavorite: !task.isFavorite,
-            updatedAt: new Date(),
+            updatedAt: new Date().toISOString(),
           };
         }
         return task;
@@ -76,7 +75,7 @@ const taskSlice = createSlice({
           return {
             ...task,
             status,
-            updatedAt: new Date(),
+            updatedAt: new Date().toISOString(),
           };
         }
         return task;

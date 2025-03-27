@@ -17,8 +17,8 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
     const newTask: TaskNode = {
       ...task,
       id: generateTaskId(userEmail),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       parentId: task.parentId || '',
     } as TaskNode;
 
@@ -27,7 +27,7 @@ export class ReduxTaskRepositoryImpl implements ITaskRepository {
   }
 
   async updateTask(taskId: string, updates: Partial<TaskNode>, userEmail: string): Promise<TaskNode> {
-    this.dispatch(updateTask({ task: { id: taskId, ...updates }, userEmail }));
+    this.dispatch(updateTask({ task: { id: taskId, updatedAt: new Date().toISOString(), ...updates }, userEmail }));
     return {} as TaskNode; 
   }
 

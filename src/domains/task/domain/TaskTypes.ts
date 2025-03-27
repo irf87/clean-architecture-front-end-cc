@@ -9,8 +9,8 @@ export interface TaskNode {
   description: string;
   status: TaskStatus;
   isFavorite: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   parentId: string;
 }
 
