@@ -1,9 +1,9 @@
 'use client';
 
-import React, { forwardRef } from 'react';
-import styled, { css } from 'styled-components';
+import { forwardRef , SelectHTMLAttributes } from 'react';
+import { styled, css } from 'styled-components';
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   helperText?: string;
   error?: boolean;
@@ -86,5 +86,4 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
   );
 });
 
-// Add display name for better debugging
 Select.displayName = 'Select'; 

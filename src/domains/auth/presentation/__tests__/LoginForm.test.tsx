@@ -1,6 +1,7 @@
-import React from 'react';
 import { fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
+
 import { LoginForm } from '@/domains/auth/presentation/LoginForm';
 import { render } from '@/test/test-utils';
 
@@ -27,7 +28,6 @@ describe('LoginForm', () => {
     // Find the submit button and inputs
     const submitButton = getByRole('button', { name: /login/i });
     const emailInput = getByLabelText(/email/i);
-    const passwordInput = getByLabelText(/password/i);
     
     // Initially the button should be disabled
     expect(submitButton).toBeDisabled();
@@ -37,8 +37,8 @@ describe('LoginForm', () => {
     fireEvent.submit(form!);
     
     // Check for validation messages
-    const emailError = await findByText('El email es requerido');
-    const passwordError = await findByText('La contraseña es requerida');
+    const emailError = await findByText('Email is required');
+    const passwordError = await findByText('Password is required');
     
     expect(emailError).toBeInTheDocument();
     expect(passwordError).toBeInTheDocument();

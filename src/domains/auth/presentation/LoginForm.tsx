@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
 
-import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
-import { Input } from '@/presentation/design-system/ui/atoms/inputs/Input';
 import { useLogin } from '@/domains/auth/application/useLogin';
 import { colors } from '@/presentation/design-system/domain/theme';
+import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
+import { Input } from '@/presentation/design-system/ui/atoms/inputs/Input';
 
 interface LoginFormInputs {
   email: string;

@@ -1,9 +1,10 @@
 'use client';
 
-import styled from 'styled-components';
-import { Modal } from '@/presentation/design-system/ui/atoms/modal/Modal';
-import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
+import { styled } from 'styled-components';
+
 import { TaskNode } from '@/domains/task/domain/TaskTypes';
+import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
+import { Modal } from '@/presentation/design-system/ui/atoms/modal/Modal';
 
 interface DeleteTaskConfirmationModalProps {
   open: boolean;
@@ -46,7 +47,7 @@ export function DeleteTaskConfirmationModal({
     >
       <Content>
         <Message>
-          Are you sure you want to delete the task "{task.title}"? This action cannot be undone.
+          Are you sure you want to delete the task &ldquo;{task.title}&rdquo;? This action cannot be undone.
         </Message>
         <ButtonGroup>
           <Button type="button" variant="secondary" onClick={onClose}>

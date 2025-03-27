@@ -22,7 +22,9 @@ export function validateDynamicKey(key: string): boolean {
     const fiveMinutes = 15 * 60 * 1000; // 15 minutes in milliseconds
     
     return now - keyTimestamp <= fiveMinutes;
-  } catch (error) {
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars 
+  catch (error) {
     return false;
   }
 } 

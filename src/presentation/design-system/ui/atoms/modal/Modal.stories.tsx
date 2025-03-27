@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Modal } from './Modal';
+
 import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
+
+import { Modal } from './Modal';
 
 const meta: Meta<typeof Modal> = {
   title: 'Design System/Atoms/Modal',

@@ -1,14 +1,16 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act, waitFor } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { useLogin } from '@/domains/auth/application/useLogin';
-import { LoginUseCase } from '@/domains/auth/application/LoginUseCase';
-import { generateDynamicKey } from '@/utils/keyGenerator';
-import { User } from '@/domains/auth/domain/AuthTypes';
-import { authReducer } from '@/domains/auth/store/authSlice';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+import { LoginUseCase } from '@/domains/auth/application/LoginUseCase';
+import { useLogin } from '@/domains/auth/application/useLogin';
+import { User } from '@/domains/auth/domain/AuthTypes';
+import { authReducer } from '@/domains/auth/store/authSlice';
+import { generateDynamicKey } from '@/utils/keyGenerator';
+
 
 // Mock dependencies
 vi.mock('@/domains/auth/application/LoginUseCase');

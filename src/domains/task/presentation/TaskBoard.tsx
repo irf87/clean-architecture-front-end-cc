@@ -1,10 +1,10 @@
 'use client';
 
-import { TaskColumn } from './TaskColumn';
+import { useTask } from '@/domains/task/application/useTask';
 import { useTaskDragAndDrop } from '@/domains/task/application/useTaskDragAndDrop';
 import { TaskStatus, TaskNode, GroupedTasks } from '@/domains/task/domain/TaskTypes';
-import { useTask } from '@/domains/task/application/useTask';
-import { useAuth } from '@/domains/auth/domain/useAuth';
+
+import { TaskColumn } from './TaskColumn';
 
 interface TaskBoardProps {
   onEditTask: (task: TaskNode) => void;

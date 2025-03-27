@@ -1,13 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { Container } from '@/presentation/design-system/ui/atoms/layouts/Container';
+
+import { useTask } from '@/domains/task/application/useTask';
+import { TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
 import { TaskBoard } from '@/domains/task/presentation/TaskBoard';
 import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
-import { TaskFormModal } from './TaskFormModal';
+import { Container } from '@/presentation/design-system/ui/atoms/layouts/Container';
+
 import { DeleteTaskConfirmationModal } from './DeleteTaskConfirmationModal';
-import { TaskNode } from '@/domains/task/domain/TaskTypes';
-import { useTask } from '@/domains/task/application/useTask';
+import { TaskFormModal } from './TaskFormModal';
+
+interface TaskFormInputs {
+  title: string;
+  description: string;
+  status: TaskStatus;
+  isFavorite: boolean;
+}
 
 export function TaskManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +53,7 @@ export function TaskManager() {
     setSelectedTask(undefined);
   };
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: TaskFormInputs) => {
     let shouldCloseModal = true;
     if (modalMode === 'create') {
       shouldCloseModal = Boolean(await createNewTask({

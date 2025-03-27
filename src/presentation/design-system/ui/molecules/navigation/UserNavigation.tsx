@@ -1,6 +1,7 @@
 'use client';
 
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+
 import { Button } from '../../atoms/buttons/Button';
 
 const StyledEmail = styled.span`

@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
-import { Modal } from '@/presentation/design-system/ui/atoms/modal/Modal';
+
+import { TASK_ERRORS } from '@/domains/task/domain/TaskConstants';
+import { TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
+import { Form, CheckboxGroup, Checkbox, ButtonGroup } from '@/domains/task/presentation/FormModalStyled';
 import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
 import { Input } from '@/presentation/design-system/ui/atoms/inputs/Input';
 import { Select } from '@/presentation/design-system/ui/atoms/inputs/Select';
-import { TaskStatus, TaskNode } from '@/domains/task/domain/TaskTypes';
-import { Form, CheckboxGroup, Checkbox, ButtonGroup } from '@/domains/task/presentation/FormModalStyled';
-import { TASK_ERRORS } from '@/domains/task/domain/TaskConstants';
+import { Modal } from '@/presentation/design-system/ui/atoms/modal/Modal';
 
 interface TaskFormInputs {
   title: string;

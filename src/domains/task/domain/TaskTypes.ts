@@ -17,7 +17,7 @@ export interface TaskNode {
 export interface CreateTaskDTO {
   title: string;
   description: string;
-  status: TaskStatus; 
+  status: TaskStatus;
   parentId?: string;
   isFavorite?: boolean;
 }

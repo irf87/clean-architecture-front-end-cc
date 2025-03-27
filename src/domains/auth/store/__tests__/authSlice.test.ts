@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { authReducer, setUser, setLoading, setError, logout } from '@/domains/auth/store/authSlice';
+
 import { AuthState, User } from '@/domains/auth/domain/AuthTypes';
+import { authReducer, setUser, setLoading, setError, logout } from '@/domains/auth/store/authSlice';
 
 describe('authSlice', () => {
   const initialState: AuthState = {

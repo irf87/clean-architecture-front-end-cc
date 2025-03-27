@@ -1,5 +1,5 @@
-import { TaskCard } from '@/domains/task/presentation/TaskCard';
 import { TaskNode } from '@/domains/task/domain/TaskTypes';
+import { TaskCard } from '@/domains/task/presentation/TaskCard';
 
 interface TaskColumnProps {
   tasks: TaskNode[];

@@ -1,6 +1,6 @@
 'use client';
 
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 interface ContainerProps {
   children: React.ReactNode;

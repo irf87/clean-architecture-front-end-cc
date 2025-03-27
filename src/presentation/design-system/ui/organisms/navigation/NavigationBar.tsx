@@ -1,6 +1,7 @@
 'use client';
 
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+
 import { UserNavigation } from '../../molecules/navigation/UserNavigation';
 
 const NavContainer = styled.nav`

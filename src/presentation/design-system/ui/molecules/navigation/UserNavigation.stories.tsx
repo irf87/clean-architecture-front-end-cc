@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { UserNavigation } from './UserNavigation';
 
 const meta: Meta<typeof UserNavigation> = {

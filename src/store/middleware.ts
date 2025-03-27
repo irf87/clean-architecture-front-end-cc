@@ -1,8 +1,8 @@
 import { Middleware } from '@reduxjs/toolkit';
 
 import { setUser } from '@/domains/auth/store/authSlice';
-import { encryptData } from '@/utils/encryption';
 import { createTask, updateTask, deleteTask, toggleFavorite, updateTaskStatus } from '@/domains/task/store/taskSlice';
+import { encryptData } from '@/utils/encryption';
 
 const TASKS_STORAGE_KEY = 'tasks';
 

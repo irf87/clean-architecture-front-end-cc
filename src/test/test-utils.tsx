@@ -1,6 +1,8 @@
-import React from 'react';
+/* eslint-disable import/export */
 import { render as rtlRender } from '@testing-library/react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
+
 import { colors, shadows, spacing } from '@/presentation/design-system/domain/theme';
 
 const theme = {

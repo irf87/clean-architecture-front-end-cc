@@ -21,7 +21,7 @@ export function TaskCard({
   draggable = true,
   onDragStart 
 }: TaskCardProps) {
-  const handleDragStart = (e: React.DragEvent) => {
+  const handleDragStart = () => {
     if (draggable && onDragStart) {
       onDragStart(task);
     }

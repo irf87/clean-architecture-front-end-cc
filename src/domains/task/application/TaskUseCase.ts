@@ -1,5 +1,5 @@
 import { ITaskRepository } from '@/domains/task/domain/TaskRepository';
-import { CreateTaskDTO, TaskNode, TaskStatus, UpdateTaskDTO } from '@/domains/task/domain/TaskTypes';
+import { CreateTaskDTO, TaskNode, TaskStatus } from '@/domains/task/domain/TaskTypes';
 
 export class TaskUseCase {
   constructor(private taskRepository: ITaskRepository) {}

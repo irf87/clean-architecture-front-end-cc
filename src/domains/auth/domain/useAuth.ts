@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+
 import { User } from '@/domains/auth/domain/AuthTypes';
+import { RootState } from '@/store/store';
 
 interface UseAuthReturn {
   user: User | null;

@@ -1,5 +1,4 @@
-import { Button } from '@/presentation/design-system/ui/atoms/buttons/Button';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const CardStyled = styled.div<{ draggable?: boolean }>`
   background-color: ${({ theme }) => theme.colors.surface.DEFAULT};
