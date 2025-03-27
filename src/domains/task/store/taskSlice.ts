@@ -31,15 +31,13 @@ const taskSlice = createSlice({
       const { task, userEmail } = action.payload;
       if (!state.tasks[userEmail]) return;
 
-      state.tasks[userEmail] = state.tasks[userEmail].map(t => {
-        if (t.id === task.id) {
-          return {
-            ...t,
-            ...task,
-          };
-        }
-        return t;
-      });
+      const taskIndex = state.tasks[userEmail].findIndex(t => t.id === task.id);
+      if (taskIndex !== -1) {
+        state.tasks[userEmail][taskIndex] = {
+          ...state.tasks[userEmail][taskIndex],
+          ...task,
+        };
+      }
     },
     deleteTask: (state, action: PayloadAction<{ taskId: string; userEmail: string }>) => {
       const { taskId, userEmail } = action.payload;
@@ -51,16 +49,14 @@ const taskSlice = createSlice({
       const { taskId, userEmail } = action.payload;
       if (!state.tasks[userEmail]) return;
 
-      state.tasks[userEmail] = state.tasks[userEmail].map(task => {
-        if (task.id === taskId) {
-          return {
-            ...task,
-            isFavorite: !task.isFavorite,
-            updatedAt: new Date().toISOString(),
-          };
-        }
-        return task;
-      });
+      const taskIndex = state.tasks[userEmail].findIndex(task => task.id === taskId);
+      if (taskIndex !== -1) {
+        state.tasks[userEmail][taskIndex] = {
+          ...state.tasks[userEmail][taskIndex],
+          isFavorite: !state.tasks[userEmail][taskIndex].isFavorite,
+          updatedAt: new Date().toISOString(),
+        };
+      }
     },
     setTasks: (state, action: PayloadAction<{ tasks: TaskNode[]; userEmail: string }>) => {
       const { tasks, userEmail } = action.payload;
@@ -70,16 +66,14 @@ const taskSlice = createSlice({
       const { taskId, status, userEmail } = action.payload;
       if (!state.tasks[userEmail]) return;
 
-      state.tasks[userEmail] = state.tasks[userEmail].map(task => {
-        if (task.id === taskId) {
-          return {
-            ...task,
-            status,
-            updatedAt: new Date().toISOString(),
-          };
-        }
-        return task;
-      });
+      const taskIndex = state.tasks[userEmail].findIndex(task => task.id === taskId);
+      if (taskIndex !== -1) {
+        state.tasks[userEmail][taskIndex] = {
+          ...state.tasks[userEmail][taskIndex],
+          status,
+          updatedAt: new Date().toISOString(),
+        };
+      }
     },
   },
 });
