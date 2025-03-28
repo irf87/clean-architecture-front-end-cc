@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates, import/order */
 import { fireEvent, screen, waitFor, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RenderResult } from '@testing-library/react';

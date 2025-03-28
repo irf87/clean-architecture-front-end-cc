@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates, import/order */
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 import { cleanup } from '@testing-library/react';

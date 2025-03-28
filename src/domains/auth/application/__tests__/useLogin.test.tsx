@@ -12,7 +12,6 @@ import { authReducer } from '@/domains/auth/store/authSlice';
 import { generateDynamicKey } from '@/utils/keyGenerator';
 
 
-// Mock dependencies
 vi.mock('@/domains/auth/application/LoginUseCase');
 vi.mock('@/utils/keyGenerator');
 vi.mock('@/store/hooks', () => ({
@@ -44,7 +43,6 @@ describe('useLogin', () => {
   });
 
   it('should handle successful login', async () => {
-    // Mock successful login response
     (LoginUseCase.prototype.execute as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({
       data: mockUser,
       error: null,
@@ -72,7 +70,6 @@ describe('useLogin', () => {
 
   it('should handle login failure', async () => {
     const errorMessage = 'Invalid credentials';
-    // Mock failed login response
     (LoginUseCase.prototype.execute as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({
       data: null,
       error: errorMessage,
@@ -92,7 +89,6 @@ describe('useLogin', () => {
   });
 
   it('should handle login with no data and no error', async () => {
-    // Mock response with no data and no error
     (LoginUseCase.prototype.execute as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({
       data: null,
       error: null,
@@ -109,7 +105,6 @@ describe('useLogin', () => {
   });
 
   it('should set loading state during login process', async () => {
-    // Mock a delayed response to test loading state
     (LoginUseCase.prototype.execute as unknown as ReturnType<typeof vi.fn>).mockImplementation(
       () => new Promise(resolve => setTimeout(() => resolve({ data: mockUser, error: null }), 100))
     );

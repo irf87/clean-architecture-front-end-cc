@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-duplicates, import/order */
 import { configureStore } from '@reduxjs/toolkit';
 import { renderHook, act } from '@testing-library/react';
 import type { ReactNode } from 'react';
@@ -45,7 +47,6 @@ describe('useTask', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    // Reset store before each test
     store = configureStore({
       reducer: {
         tasks: taskReducer,
@@ -53,7 +54,6 @@ describe('useTask', () => {
       },
     });
 
-    // Create a mock repository instance that updates the store
     mockRepository = {
       getAllTasks: vi.fn().mockReturnValue([]),
       createTask: vi.fn().mockImplementation((task: Partial<TaskNode>, userEmail: string) => {
@@ -93,7 +93,6 @@ describe('useTask', () => {
       }),
     };
 
-    // Update the mock implementation for each test
     vi.mocked(ReduxTaskRepositoryImpl).mockImplementation(() => mockRepository);
   });
 
@@ -118,7 +117,6 @@ describe('useTask', () => {
     });
 
     it('should not create a task when title is duplicate', async () => {
-      // Mock getAllTasks to return a task with the duplicate title
       mockRepository.getAllTasks.mockReturnValue([{
         ...mockTask,
         title: 'Duplicate Task',
@@ -153,10 +151,8 @@ describe('useTask', () => {
         });
       });
 
-      // Get the created task ID
       const taskId = result.current.tasks.pending[0].id;
 
-      // Update the task
       await act(async () => {
         await result.current.updateExistingTask(taskId, {
           title: 'Updated Task',
@@ -170,7 +166,6 @@ describe('useTask', () => {
     });
 
     it('should not update a task when new title is duplicate', async () => {
-      // Mock getAllTasks to return tasks with the duplicate title
       mockRepository.getAllTasks.mockReturnValue([
         { ...mockTask, id: '1', title: 'First Task' },
         { ...mockTask, id: '2', title: 'Second Task' },
@@ -178,7 +173,6 @@ describe('useTask', () => {
 
       const { result } = renderHook(() => useTask(), { wrapper: Wrapper });
 
-      // Create initial tasks in the store
       await act(async () => {
         await result.current.createNewTask({
           title: 'First Task',
@@ -195,7 +189,6 @@ describe('useTask', () => {
         });
       });
 
-      // Try to update first task with second task's title
       await act(async () => {
         await result.current.updateExistingTask('1', {
           title: 'Second Task',
@@ -211,7 +204,6 @@ describe('useTask', () => {
     it('should remove task from store', async () => {
       const { result } = renderHook(() => useTask(), { wrapper: Wrapper });
 
-      // First create a task
       await act(async () => {
         await result.current.createNewTask({
           title: 'Task to Delete',
@@ -220,10 +212,8 @@ describe('useTask', () => {
         });
       });
 
-      // Get the created task ID
       const taskId = result.current.tasks.pending[0].id;
 
-      // Delete the task
       await act(async () => {
         await result.current.deleteTask(taskId);
       });
@@ -247,10 +237,8 @@ describe('useTask', () => {
         });
       });
 
-      // Get the created task ID
       const taskId = result.current.tasks.pending[0].id;
 
-      // Toggle favorite
       await act(async () => {
         await result.current.toggleFavorite(taskId);
       });
