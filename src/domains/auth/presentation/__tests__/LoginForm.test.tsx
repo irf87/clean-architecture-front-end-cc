@@ -55,7 +55,7 @@ describe('LoginForm', () => {
     fireEvent.submit(form!);
     
     // Check for validation message
-    const emailError = await findByText('Correo electrónico inválido');
+    const emailError = await findByText('Invalid email');
     expect(emailError).toBeInTheDocument();
   });
 

@@ -45,15 +45,15 @@ describe('keyGenerator', () => {
   });
 
   describe('validateDynamicKey', () => {
-    it('should validate a correctly formatted key within 5 minutes', () => {
+    it('should validate a correctly formatted key within 15 minutes', () => {
       const key = generateDynamicKey();
       expect(validateDynamicKey(key)).toBe(true);
     });
 
-    it('should reject a key older than 5 minutes', () => {
+    it('should reject a key older than 15 minutes', () => {
       const key = generateDynamicKey();
-      // Move time forward by 6 minutes
-      vi.advanceTimersByTime(6 * 60 * 1000);
+      // Move time forward by 16 minutes
+      vi.advanceTimersByTime(16 * 60 * 1000);
       expect(validateDynamicKey(key)).toBe(false);
     });
 

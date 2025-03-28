@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vitest/config';
-import path from 'path';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
@@ -9,10 +9,7 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-    },
+    include: ['**/__tests__/**/*.test.ts', '**/__tests__/**/*.test.tsx'],
   },
   resolve: {
     alias: {
@@ -21,6 +18,7 @@ export default defineConfig({
       '@/utils': path.resolve(__dirname, './src/utils'),
       '@/shared': path.resolve(__dirname, './src/shared'),
       '@/design-system': path.resolve(__dirname, './src/presentation/design-system'),
+      '@/presentation/design-system': path.resolve(__dirname, './src/presentation/design-system'),
       '@/redux-store': path.resolve(__dirname, './src/store'),
     },
   },
