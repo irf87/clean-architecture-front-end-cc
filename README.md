@@ -23,7 +23,7 @@ NEXT_PUBLIC_ENCRYPTION_KEY="ezjllOXzhNB2l8jAsjbAhpvXVQ7RpQDk"
 
 ## Login
 
-(Obtener lista de usuarios permitidos)[https://reqres.in/api-docs/#/default/get_users]
+[Obtener lista de usuarios permitidos](https://reqres.in/api-docs/#/default/get_users)
 Ejemplo: 
 email: george.bluth@reqres.in
 password: 123456
