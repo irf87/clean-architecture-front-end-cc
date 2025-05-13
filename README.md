@@ -1,21 +1,21 @@
-# Multi Apoyo Front End Technical Test
+# (Clean architecture) Front End Technical Test
 
-Este es un proyecto desarrollado con [Next.js](https://nextjs.org) utilizando una arquitectura basada en Domain-Driven Design (DDD).
+This project is developed with [Next.js](https://nextjs.org) using a Domain-Driven Design (DDD) architecture.
 
-## Requisitos Previos
+## Prerequisites
 
-- Node.js (versión 18 o superior)
-- npm o yarn
+- Node.js (version 18 or higher)
+- npm or yarn
 
-## Configuración del Entorno
+## Environment Setup
 
-1. Clona el repositorio
-2. Instala las dependencias:
+1. Clone the repository
+2. Install dependencies:
 ```bash
 yarn install
 ```
 
-3. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+3. Create a `.env` file in the project root with the following variables:
 ```env
 NEXT_PUBLIC_API_URL="https://reqres.in/api"
 NEXT_PUBLIC_ENCRYPTION_KEY="ezjllOXzhNB2l8jAsjbAhpvXVQ7RpQDk"
@@ -23,37 +23,37 @@ NEXT_PUBLIC_ENCRYPTION_KEY="ezjllOXzhNB2l8jAsjbAhpvXVQ7RpQDk"
 
 ## Login
 
-[Obtener lista de usuarios permitidos](https://reqres.in/api-docs/#/default/get_users)
-Ejemplo: 
+[Get list of allowed users](https://reqres.in/api-docs/#/default/get_users)
+Example: 
 email: george.bluth@reqres.in
 password: 123456
 
-## Scripts Disponibles
+## Available Scripts
 
-### Desarrollo
+### Development
 ```bash
 yarn dev
 ```
-Inicia el servidor de desarrollo en [http://localhost:3000](http://localhost:3000)
+Starts the development server at [http://localhost:3000](http://localhost:3000)
 
-### Pruebas Unitarias
+### Unit Testing
 ```bash
-# Ejecutar todas las pruebas
+# Run all tests
 yarn test
 
-# Ejecutar pruebas en modo watch
+# Run tests in watch mode
 yarn test:watch
 
-# Ejecutar pruebas con cobertura
+# Run tests with coverage
 yarn test:coverage
 ```
 
 ### Storybook
 ```bash
-# Iniciar Storybook
+# Start Storybook
 yarn storybook
 
-# Construir Storybook
+# Build Storybook
 yarn build-storybook
 ```
 
@@ -61,16 +61,18 @@ yarn build-storybook
 ```bash
 yarn lint
 
-# Corregir errores de formato automáticamente
-
+# Fix formatting errors automatically
 yarn lint:fix
 ```
 
-## Documentación
+## Documentation
 
-Para más detalles sobre la arquitectura, decisiones de diseño y estrategias implementadas, consulta la [documentación técnica](https://docs.google.com/document/d/1Aklxm3mtinLMibq8v-KjJ3ovYTHOvfOvFxfOPn04Kt4/edit?usp=sharing).
+For more details about the architecture, design decisions, and implemented strategies, please check:
 
-## Tecnologías Principales
+- [Technical Documentation](./TECHNICAL_DOCUMENTATION.MD) - Detailed technical overview
+- [Requirements](./REQUIREMENT.md) - Project requirements and specifications
+
+## Main Technologies
 
 - Next.js 14
 - React 18
@@ -79,4 +81,4 @@ Para más detalles sobre la arquitectura, decisiones de diseño y estrategias im
 - Styled Components
 - Vitest
 - Storybook
-- Tailwind css
+- Tailwind CSS
