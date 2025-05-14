@@ -2,20 +2,22 @@ import { NextResponse } from 'next/server'
 
 import { LoginUseCase } from '@/domains/auth/application/server/LoginUseCase';
 import { AuthRepositoryImpl } from '@/domains/auth/infrastructure/server/AuthRepositoryImpl';
-
-// Simulate random delay between 1-5 seconds
-const randomDelay = () => new Promise(resolve => setTimeout(resolve, Math.random() * 4000 + 1000))
+/*
+  // Simulate random delay between 1-5 seconds
+  const randomDelay = () => new Promise(resolve => setTimeout(resolve, Math.random() * 4000 + 1000))
+*/
 
 export async function POST(request: Request) {
   try {
+    /*
+      await randomDelay();
 
-    await randomDelay();
-
-    // 20% chance of timeout
-    if (Math.random() < 0.2) {
-      // Simulate a longer delay to trigger timeout
-      await new Promise(resolve => setTimeout(resolve, 6000))
-    }
+      // 20% chance of timeout
+      if (Math.random() < 0.2) {
+        // Simulate a longer delay to trigger timeout
+        await new Promise(resolve => setTimeout(resolve, 6000))
+      }
+    */
 
     const loginUseCase = new LoginUseCase(new AuthRepositoryImpl());
 
@@ -23,6 +25,7 @@ export async function POST(request: Request) {
     const { email, password, dynamicKey } = body;
 
     const userResponse = await loginUseCase.execute(email, password);
+    console.log('userResponse', userResponse);
 
     if(userResponse.error) {
       return NextResponse.json(
