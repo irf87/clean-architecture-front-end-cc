@@ -19,6 +19,7 @@ yarn install
 ```env
 NEXT_PUBLIC_API_URL="https://reqres.in/api"
 NEXT_PUBLIC_ENCRYPTION_KEY="ezjllOXzhNB2l8jAsjbAhpvXVQ7RpQDk"
+NEXT_PUBLIC_API_KEY="reqres-free-v1"
 ```
 
 ## Login
