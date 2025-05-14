@@ -10,8 +10,8 @@ import { Providers } from '@/store/provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Multi Apoyo Front End Technical Test',
-  description: 'Technical test for Multi Apoyo Front End position',
+  title: 'Clean Architecture Front End Technical Test',
+  description: 'Technical test for Clean Architecture Front End position',
 };
 
 export default function RootLayout({
