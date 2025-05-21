@@ -29,6 +29,7 @@ export function UserNavigation({ email, onLogout }: UserNavigationProps) {
         variant="tertiary"
         size="small"
         onClick={onLogout}
+        data-testid="logout-button"
       >
         Logout
       </Button>

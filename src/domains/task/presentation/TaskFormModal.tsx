@@ -106,6 +106,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
                 label="Title"
                 error={!!formMethods.formState.errors.title || !!duplicateTitleError}
                 helperText={formMethods.formState.errors.title?.message || duplicateTitleError || undefined}
+                data-testid="task-title-input"
                 {...field}
                 fullWidth
               />
@@ -127,6 +128,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
                 label="Description"
                 error={!!formMethods.formState.errors.description}
                 helperText={formMethods.formState.errors.description?.message}
+                data-testid="task-description-input"
                 {...field}
                 fullWidth
               />
@@ -144,6 +146,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
                 label="Status"
                 error={!!formMethods.formState.errors.status}
                 helperText={formMethods.formState.errors.status?.message}
+                data-testid="task-status-select"
                 {...field}
                 fullWidth
               >
@@ -166,6 +169,7 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
                   id="favorite"
                   checked={value}
                   onChange={(e) => onChange(e.target.checked)}
+                  data-testid="task-favorite-checkbox"
                 />
                 <label htmlFor="favorite">Mark as favorite</label>
               </CheckboxGroup>
@@ -173,12 +177,13 @@ export function TaskFormModal({ open, onClose, onSubmit, task, mode, error }: Ta
           />
 
           <ButtonGroup>
-            <Button type="button" variant="secondary" onClick={onClose}>
+            <Button type="button" variant="secondary" onClick={onClose} data-testid="task-cancel-button">
               Cancel
             </Button>
             <Button 
               type="submit"
               disabled={!formMethods.formState.isValid}
+              data-testid="task-submit-button"
             >
               {mode === 'create' ? 'Create Task' : 'Update Task'}
             </Button>

@@ -66,6 +66,53 @@ yarn lint
 yarn lint:fix
 ```
 
+## Cypress Testing
+
+This project uses Cypress for end-to-end and component testing. Here's how to use it:
+
+### Running Cypress
+
+1. Open Cypress Test Runner:
+```bash
+yarn cypress:open
+```
+
+2. Run all Cypress tests in headless mode:
+```bash
+yarn cypress:run
+```
+
+3. Run only component tests:
+```bash
+yarn cypress:component
+```
+
+4. Run only end-to-end tests:
+```bash
+yarn cypress:e2e
+```
+
+### Test Structure
+
+- End-to-end tests are located in `cypress/e2e/`
+- Component tests are located in `cypress/component/`
+- Support files and custom commands are in `cypress/support/`
+
+### Writing Tests
+
+- Use `.cy.ts` or `.cy.tsx` extension for test files
+- Follow the naming convention: `[name].cy.ts`
+- Place component tests in the component directory
+- Place e2e tests in the e2e directory
+
+### Best Practices
+
+1. Keep tests isolated and independent
+2. Use meaningful test descriptions
+3. Follow the Arrange-Act-Assert pattern
+4. Use custom commands for common operations
+5. Keep tests focused and maintainable
+
 ## Documentation
 
 For more details about the architecture, design decisions, and implemented strategies, please check:

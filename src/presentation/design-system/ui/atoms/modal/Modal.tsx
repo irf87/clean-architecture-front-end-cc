@@ -85,7 +85,7 @@ export function Modal({ open, onClose, children, title }: ModalProps) {
 
   return (
     <Overlay $isOpen={open} onClick={onClose}>
-      <ModalContainer onClick={(e) => e.stopPropagation()}>
+      <ModalContainer onClick={(e) => e.stopPropagation()} role="dialog">
         <CloseButton onClick={onClose} aria-label="Close modal">
           ×
         </CloseButton>
