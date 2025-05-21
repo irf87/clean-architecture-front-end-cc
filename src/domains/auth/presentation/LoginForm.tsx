@@ -49,6 +49,7 @@ export function LoginForm() {
           label="Email"
           error={!!formMethods.formState.errors.email}
           helperText={formMethods.formState.errors.email?.message}
+          data-testid="email-input"
           {...field}
         />
       )} />
@@ -64,6 +65,7 @@ export function LoginForm() {
             type="password"
             error={!!formMethods.formState.errors.password}
             helperText={formMethods.formState.errors.password?.message}
+            data-testid="password-input"
             {...field}
           />
         )}
@@ -74,13 +76,18 @@ export function LoginForm() {
           disabled={!formMethods.formState.isValid || isLoading}
           isLoading={isLoading}
           variant="primary"
+          data-testid="loader"
         >
           Login
         </Button>
       </div>
 
       {error && (
-        <div className="flex justify-center text-center" style={{ color: colors.status.error.DEFAULT }}>
+        <div 
+          className="flex justify-center text-center" 
+          style={{ color: colors.status.error.DEFAULT }}
+          data-testid="error-message"
+        >
           {error}
         </div>
       )}

@@ -32,13 +32,15 @@ export function TaskCard({
     <Card
       draggable={draggable}
       onDragStart={handleDragStart}
+      data-testid={`task-card-${task.id}`}
     >
       <Card.Header>
-        <Card.Title>{task.title}</Card.Title>
+        <Card.Title data-testid={`task-title-${task.id}`}>{task.title}</Card.Title>
         <Card.FavoriteButton
           $isFavorite={task.isFavorite}
           onClick={() => onToggleFavorite?.(task.id)}
           aria-label={task.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+          data-testid={`task-favorite-${task.id}`}
         >
           {task.isFavorite ? '★' : '☆'}
         </Card.FavoriteButton>
